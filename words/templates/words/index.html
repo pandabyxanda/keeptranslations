@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'words/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
 
-<!--    title of page, name of the tab-->
-    <title>{{ title }}</title>
-</head>
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>Main page
 
-<body>
     <ul>
-        {% for m in menu %}
-            <li>{{ m }}</li>
+        {% for w in words %}
+        <li>
+            <h3>{{ w.word }}</h3>
+            <p>{{ w.translation }}</p>
+            <hr>
+        </li>
         {% endfor %}
     </ul>
-</body>
 
-</html>
+{% endblock content %}

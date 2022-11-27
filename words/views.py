@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
-
+from .models import *
 
 # Create your views here.
 
@@ -17,9 +17,12 @@ from django.shortcuts import render, redirect
 
 menu = {'Main page', 'About', 'Login'}
 
-def index(request, *args, **kwargs):
-    return render(request, 'words/index.html', {'menu': menu, 'title': 'main pag'})
+# def index(request, *args, **kwargs):
+#     return render(request, 'words/index.html', {'menu': menu, 'title': 'main pag'})
 
+def index(request, *args, **kwargs):
+    words = Words.objects.all()
+    return render(request, 'words/index.html', {'words': words, 'menu': menu, 'title': 'main pag'})
 
 def about(request, *args, **kwargs):
     return render(request, 'words/about.html', {'menu': menu, 'title': 'ABOUT'})
