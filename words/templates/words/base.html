@@ -9,17 +9,25 @@
     <!--    title of page, name of the tab-->
     <title>{{ title }}</title>
     <link type="text/css" href="{% static 'words/css/styles.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon" href="{% static 'words/css/images/icon-01.png' %}" type="image/png" />
 </head>
 
 <body>
 {% block mainmenu %}
 <!--<section class="section_head">-->
     <header>
-        <ul>
-            {% for m in menu %}
-            <li>{{ m }}</li>
-            {% endfor %}
-        </ul>
+        <div class="inner_header">
+            <ul id="mainmenu" class="mainmenu">
+                {% for m in menu %}
+                    {% if not forloop.last %}
+                        <li><a href="#">{{ m }}</a></li>
+                    {% else %}
+                        <li class="last"><a href="#">{{ m }}</a></li>
+                    {%endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
     </header>
 <!--</section>-->
 {% endblock mainmenu %}

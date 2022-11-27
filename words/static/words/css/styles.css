@@ -1,5 +1,6 @@
 html {
     width: 100%;
+    height: auto;
     font-size: 75%;
 
 }
@@ -7,14 +8,14 @@ html {
 
 
 body {
-    margin: 0px;
+    margin: 20px;
     padding: 0px;
     border: 0px;
   font-size: 1.4rem;
   font-family: "Open Sans", sans-serif;
   color: #0a263d;
 
-  background: linear-gradient(45deg, #c0e2f9, #b2bfc8);
+  background: linear-gradient(0deg, #c0e2f9, #b2bfc8);
 
 }
 /*
@@ -31,9 +32,12 @@ header {
     left: 0;
 
     margin: 0px;
+    padding: 0px;
+    border: 0px;
     position: fixed;
     width: 100%;
     height: 8%;
+    text-align: left;
 
 
 
@@ -43,7 +47,9 @@ header {
     left: 0px;
     right: 0px;
     -webkit-box-align: center;
+    /*
     align-items: center;
+    */
     z-index: var(--layer-header);
     transition: background 400ms ease 0s;
 
@@ -53,27 +59,80 @@ header {
     backdrop-filter: blur(2px);
 }
 
+.inner_header{
+    margin: 0% 2%;
 
+}
+
+
+main{
+    margin: 80px auto;
+    height: 100%;
+}
+
+
+/*
 *::first-letter {
     color: #145992;
 }
+*/
 
 p {
   color: #134c7b;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+header:hover{
+    background: rgba(0,0,0,0.15);
+    backdrop-filter: blur(3px);
+}
+
+
+a:hover {
+    color: #da8ef8;
+}
+
 /* изменение при наведении*/
 li:hover {
+    color: #1d71b6;
 
+
+    /*
     background: rgba(0,0,0,0.1);
-    /* opacity: 0.5; */
+    font-weight:bold
+    */
 
-    backdrop-filter: blur(2px);
+    /* color: #fdc073; */
+    /* opacity: 0.5; */
 }
+
+ul.mainmenu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 60px;
+	font-size: 30px;
+	overflow: hidden;
+}
+ul.mainmenu li {
+	float: left;
+	margin: 18px 40px 0 30px;
+}
+ul.mainmenu li.logo {margin: 0;}
+ul.mainmenu li.last {float: right;}
+
+
+
+
+
+/*
 p:hover {
   background-color: #f67deb;
 }
-
+*/
 /*
 p {
   color: #134c7b;
