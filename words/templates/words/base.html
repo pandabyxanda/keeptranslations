@@ -20,9 +20,14 @@
             <ul id="mainmenu" class="mainmenu">
                 {% for m in menu %}
                     {% if not forloop.last %}
-                        <li><a href="#">{{ m }}</a></li>
+                        {% if m.title == title %}
+                            <li class="selected">{{ m.title }}</li>
+                        {% else %}
+                            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                        {%endif %}
+
                     {% else %}
-                        <li class="last"><a href="#">{{ m }}</a></li>
+                        <li class="last"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
                     {%endif %}
 
                 {% endfor %}
