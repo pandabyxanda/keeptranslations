@@ -7,7 +7,9 @@
 <!--        <p>Main page-->
         <form action="{% url 'home' %}" method="post">
             {% csrf_token %}
+            <div class="card" data-tilt>
             {{ form3 }}
+            </div>
             <p>
             <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">
 <!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
