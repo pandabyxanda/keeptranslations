@@ -1,5 +1,11 @@
+from django.contrib.auth import logout, login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 
 from .forms import *
 from .models import *
@@ -21,6 +27,7 @@ from .translations import make_google_translation
 # menu = ['Main page', 'About', 'Login']
 
 menu = [{'title': 'Main page', 'url_name': 'home'},
+        {'title': 'Saved', 'url_name': 'saved'},
         {'title': 'About', 'url_name': 'about'},
         {'title': 'Login', 'url_name': 'login'},
 ]
@@ -31,8 +38,10 @@ last_word = {'word': None}
 #     return render(request, 'words/index.html', {'menu': menu, 'title': 'main pag'})
 
 def index(request, *args, **kwargs):
-    words = Words.objects.all()
-
+    words = Words.objects.order_by('-pk')
+    paginator = Paginator(words, 1)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     print(last_word)
     if request.method == 'POST':
         word = request.POST['word']
@@ -69,31 +78,91 @@ def index(request, *args, **kwargs):
     #     form1 = AddWordsForm()
     #     form2 = AddTranslationForm()
 
-
-
-
-
-
     context = {
         'words': words,
         'menu': menu,
         'title': menu[0]['title'],
         'form3': form3,
+        'page_obj': page_obj,
     }
-
 
     return render(request, 'words/index.html', context=context)
     # return render(request, 'words/index.html', {'words': words, 'menu': menu, 'title': 'main pag'})
 
-def about(request, *args, **kwargs):
+# class WordHome(ListView):
+#     model = Words
+#     template_name = 'words/index.html'
+
+# class WordHome(CreateView):
+#     form_class = AddWordsForm1
+#     template_name = 'words/index.html'
+#     success_url = reverse_lazy('home')
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = menu[0]['title']
+#         context['menu'] = menu
+#         return context
+
+
+def saved(request, *args, **kwargs):
+    words = Words.objects.order_by('-pk')
+    paginator = Paginator(words, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'menu': menu,
         'title': menu[1]['title'],
+        'page_obj': page_obj,
+    }
+    return render(request, 'words/saved.html', context=context)
+
+def about(request, *args, **kwargs):
+    context = {
+        'menu': menu,
+        'title': menu[2]['title'],
     }
     return render(request, 'words/about.html', context=context)
 
-def login(request, *args, **kwargs):
-    return HttpResponse("login page, not created")
+# def login(request, *args, **kwargs):
+#     context = {
+#         'menu': menu,
+#         'title': menu[-1]['title'],
+#     }
+#     return render(request, 'words/login.html', context=context)
+
+# def register(request, *args, **kwargs):
+#     context = {
+#         'menu': menu,
+#         'title': menu[-1]['title'],
+#     }
+#     return render(request, 'words/login.html', context=context)
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'words/register.html'
+    success_url = reverse_lazy('login')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Register'
+        context['menu'] = menu
+        return context
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'words/login.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Login'
+        context['menu'] = menu
+        return context
+    def get_success_url(self):
+        return reverse_lazy('home')
+
 
 # only if debug = True
 def pageNotFound(request, exception):
@@ -102,3 +171,7 @@ def pageNotFound(request, exception):
     #                             "<hr>"
     #                             "<p>"
     #                             "<h1>stop experiments</h1>")
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')

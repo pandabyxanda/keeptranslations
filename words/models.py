@@ -22,5 +22,5 @@ class Words(models.Model):
     class Meta:
         verbose_name = 'words__'
         verbose_name_plural = 'words__'
-        ordering = ['time_created',]
+        ordering = ['-pk',]
 

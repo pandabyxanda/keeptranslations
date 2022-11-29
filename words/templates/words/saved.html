@@ -1,0 +1,32 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<main>
+<!--    <h1>{{ title }}</h1>-->
+    <div>
+        <ul>
+            {% for w in page_obj %}
+            <li>
+                <h4>{{ w.pk }} {{ w.word }}</h4>
+                {{ w.translation }}
+                <hr>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+Logout
+    <div>
+        <ul class="pag1">
+            {% for p in page_obj.paginator.page_range %}
+            <li>
+                <a href="?page={{ p }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+</main>
+{% endblock content %}

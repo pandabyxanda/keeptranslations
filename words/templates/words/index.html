@@ -4,12 +4,12 @@
 {% block content %}
     <main>
 <!--        <h1>{{ title }}</h1>-->
-<!--        <p>Main page-->
+        <p>en → ru
         <form action="{% url 'home' %}" method="post">
             {% csrf_token %}
-            <div class="card" data-tilt>
+<!--            <div class="card" data-tilt>-->
             {{ form3 }}
-            </div>
+<!--            </div>-->
             <p>
             <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">
 <!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
@@ -44,4 +44,18 @@
 <!--            {% endfor %}-->
 <!--        </ul>-->
     </main>
+    <div>
+
+        <ul>
+            {% for w in page_obj %}
+            <li>
+                <h4>{{ w.word }}</h4>
+                {{ w.translation }}
+                <hr>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
 {% endblock content %}

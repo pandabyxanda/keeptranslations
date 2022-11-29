@@ -124,6 +124,18 @@ ul.mainmenu li.logo {margin: 0;}
 ul.mainmenu li.last {float: right;}
 
 
+ul.pag1 {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 60px;
+	font-size: 30px;
+	overflow: hidden;
+}
+ul.pag1 li {
+	float: left;
+	margin: 18px 40px 0 30px;
+}
 
 
 
@@ -175,7 +187,27 @@ hr {
     gyroscopeMaxAngleY:     45,     // This is the top limit of the device angle on Y axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the bottom border of the element;
 }
 
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
 
+.form-label {
+    display: inline-block;
+    min-width: 150px;
+    vertical-align: top;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
+}
+
+.form-button {
+    min-width: 200px;
+    font-size: 16px;
+}
 /*
 
 .card {

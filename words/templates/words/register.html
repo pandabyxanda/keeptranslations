@@ -1,0 +1,40 @@
+{% extends 'words/base.html' %}
+
+
+{% block content %}
+<main>
+        <h1>{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+<!--            <div class="card" data-tilt>-->
+<!--            {{ form.as_p }}-->
+<!--            </div>-->
+            {% for f in form %}
+                <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }} </p>
+                <div class="form-error">{{f.errors}}</div>
+            {% endfor %}
+
+
+
+            <input type="submit" value="Submit">
+<!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
+<!--            <input type="button" onclick="alert('Hello World!')" value="Click Me!">-->
+        </form>
+
+</main>
+{% endblock content %}
+
+
+<!--<main>-->
+<!--        <h1>{{ title }}</h1>-->
+<!--        <form method="post">-->
+<!--            {% csrf_token %}-->
+<!--&lt;!&ndash;            <div class="card" data-tilt>&ndash;&gt;-->
+<!--            {{ form.as_p }}-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <input type="submit" value="Submit">-->
+<!--&lt;!&ndash;            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>&ndash;&gt;-->
+<!--&lt;!&ndash;            <input type="button" onclick="alert('Hello World!')" value="Click Me!">&ndash;&gt;-->
+<!--        </form>-->
+
+<!--</main>-->
