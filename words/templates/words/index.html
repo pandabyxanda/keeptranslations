@@ -2,17 +2,60 @@
 
 
 {% block content %}
-    <h1>{{ title }}</h1>
-    <p>Main page
+    <main>
+<!--        <h1>{{ title }}</h1>-->
+        <p>en → ru
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+<!--            <div class="card" data-tilt>-->
+            {{ form3 }}
+<!--            </div>-->
+            <p>
+            <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">
+<!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
+            <input type="button" onclick="alert('Hello World!')" value="Click Me!">
+        </form>
 
-    <ul>
-        {% for w in words %}
-        <li>
-            <h3>{{ w.word }}</h3>
-            <p>{{ w.translation }}</p>
-            <hr>
-        </li>
-        {% endfor %}
-    </ul>
 
+
+<!--        <form action="{% url 'home' %}" method="post">-->
+<!--            {% csrf_token %}-->
+<!--            {{ form1 }}-->
+<!--&lt;!&ndash;            <input type="submit" value="Submit">&ndash;&gt;-->
+<!--            <button type="submit">>>>></button>-->
+<!--        </form>-->
+
+<!--        <form action="{% url 'home' %}" method="post">-->
+<!--            {% csrf_token %}-->
+<!--            {{ form2 }}-->
+<!--        </form>-->
+
+
+
+
+
+<!--        <ul>-->
+<!--            {% for w in words %}-->
+<!--            <li>-->
+<!--                <h3>{{ w.word }}</h3>-->
+<!--                <p>{{ w.translation }}</p>-->
+<!--                <hr>-->
+<!--            </li>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+    </main>
+    <div>
+
+        <ul>
+            {% for w in page_obj %}
+            <li>
+                <h4>{{ w.word }}</h4>
+                {{ w.translation }}
+                <hr>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
 {% endblock content %}
