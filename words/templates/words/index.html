@@ -5,31 +5,37 @@
     <main>
 <!--        <h1>{{ title }}</h1>-->
         <p>en → ru
-        <form action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-<!--            <div class="card" data-tilt>-->
-            {{ form3 }}
-<!--            </div>-->
-            <p>
-            <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">
-<!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
-            <input type="button" onclick="alert('Hello World!')" value="Click Me!">
-        </form>
-
-
-
 <!--        <form action="{% url 'home' %}" method="post">-->
 <!--            {% csrf_token %}-->
-<!--            {{ form1 }}-->
-<!--&lt;!&ndash;            <input type="submit" value="Submit">&ndash;&gt;-->
-<!--            <button type="submit">>>>></button>-->
+<!--&lt;!&ndash;            <div class="card" data-tilt>&ndash;&gt;-->
+<!--            {{ form3 }}-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <p>-->
+<!--            <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">-->
+<!--&lt;!&ndash;            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>&ndash;&gt;-->
+<!--            <input type="button" onclick="alert('Hello World!')" value="Click Me!">-->
 <!--        </form>-->
 
-<!--        <form action="{% url 'home' %}" method="post">-->
-<!--            {% csrf_token %}-->
-<!--            {{ form2 }}-->
-<!--        </form>-->
 
+        <div class="main_form_block">
+            <form class="main_form" action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+
+                {% for f in form1 %}
+                    {{ f }}
+                {% endfor %}
+
+<!--                {{ form1 }}-->
+    <!--            <input type="submit" value="Submit">-->
+                <button class="button_translate" type="submit">>>>></button>
+            </form>
+
+            <form class="main_form" action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+                {{ form2 }}
+                <button class="button_save" type="submit">star</button>
+            </form>
+        </div>
 
 
 
@@ -43,7 +49,7 @@
 <!--            </li>-->
 <!--            {% endfor %}-->
 <!--        </ul>-->
-    </main>
+
     <div>
 
         <ul>
@@ -58,4 +64,5 @@
 
 
     </div>
+        </main>
 {% endblock content %}

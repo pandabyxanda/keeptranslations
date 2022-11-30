@@ -33,7 +33,7 @@ menu = [{'title': 'Main page', 'url_name': 'home'},
 ]
 
 last_word = {'word': None}
-
+word_in_form1 = {'word': None}
 # def index(request, *args, **kwargs):
 #     return render(request, 'words/index.html', {'menu': menu, 'title': 'main pag'})
 
@@ -42,36 +42,73 @@ def index(request, *args, **kwargs):
     paginator = Paginator(words, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    print(last_word)
+    print(f"{request.method = }")
+    # Words.objects.create(word='235')
+
     if request.method == 'POST':
-        word = request.POST['word']
+        if request.POST.get('word'):
+            print(f"{request.POST.get('word') = }")
+            last_word['word'] = request.POST.get('word')
+            translation = make_google_translation(last_word['word'])['translatedText']
+            print(f'{translation = }')
 
-        translation = request.POST['translation']
-        if not translation or word != last_word['word']:
-            translation = make_google_translation(word)['translatedText']
-            print('translation done')
-        form3 = AddWordsForm1({'word': word, 'translation': translation})
-        # print(request.POST['word'])
-        if form3.is_valid():
-            print(form3.cleaned_data)
+            form1 = AddWordsForm(request.POST)
+            form2 = AddTranslationForm({'translation': translation})
+
+
+        if request.POST.get('translation'):
+            print(f"{request.POST.get('translation') = }")
+            form1 = AddWordsForm(last_word)
+            form2 = AddTranslationForm(request.POST)
+            # print(f"{form1.cleaned_data = }")
+            # print(f"{form2.cleaned_data = }")
             try:
-                form3.save()
-                last_word['word'] = word
+                Words.objects.create(word=last_word['word'], translation=request.POST.get('translation'))
             except:
-                form3.add_error(None, "Error saving to db")
-        # translation = 'собака'
+                print("error adding to db")
 
-        # form2 = AddTranslationForm({'translation': translation})
     else:
-        form3 = AddWordsForm1()
+        print(f"{last_word = }")
+        print(f"{word_in_form1 = }")
+        form1 = AddWordsForm()
+        form2 = AddTranslationForm()
+
+
+
+
+    # if request.method == 'POST':
+    #     word = request.POST['word']
+    #
+    #     translation = request.POST['translation']
+    #     if not translation or word != last_word['word']:
+    #         translation = make_google_translation(word)['translatedText'] + "\nnext line" + "\nnext line"
+    #         print('translation done')
+    #     form3 = AddWordsForm1({'word': word, 'translation': translation})
+    #     # print(request.POST['word'])
+    #     if form3.is_valid():
+    #         print(form3.cleaned_data)
+    #         try:
+    #             form3.save()
+    #             last_word['word'] = word
+    #         except:
+    #             form3.add_error(None, "Error saving to db")
+    #     # translation = 'собака'
+    #
+    #     # form2 = AddTranslationForm({'translation': translation})
+    # else:
+    #     form3 = AddWordsForm1()
+
+
 
     # if request.method == 'POST':
     #     form1 = AddWordsForm(request.POST)
     #     print(request.POST)
     #     if form1.is_valid():
-    #         print(form1.cleaned_data)
+    #         print(f"{form1.cleaned_data = }")
+    #         word_in_form1['word'] = form1.cleaned_data['word']
+    #
     #     # translation = 'собака'
-    #     translation = make_google_translation(form1.cleaned_data['word'])['translatedText']
+    #     translation = make_google_translation(word_in_form1['word'])['translatedText']
     #
     #     form2 = AddTranslationForm({'translation': translation})
     # else:
@@ -82,7 +119,8 @@ def index(request, *args, **kwargs):
         'words': words,
         'menu': menu,
         'title': menu[0]['title'],
-        'form3': form3,
+        'form1': form1,
+        'form2': form2,
         'page_obj': page_obj,
     }
 
