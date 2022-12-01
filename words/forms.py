@@ -1,37 +1,45 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-
+from captcha.fields import CaptchaField
 from .models import *
 
+# class AddWordsForm(forms.Form):
+#     word = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='', initial='type here')
+
 class AddWordsForm(forms.Form):
-    word = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='', initial='type here')
+    word = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': 'Type english text here'}), label='', )
 
 class AddTranslationForm(forms.Form):
-    translation = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='')
+    translation = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': "Translation"}), label='')
 
-class AddWordsForm1(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['word'].label = ''
-        self.fields['translation'].label = ''
-
-    class Meta:
-        model = Words
-        fields = ['word', 'translation']
-        widgets = {
-            'word': forms.Textarea(attrs={'cols':60, 'rows':10}),
-            'translation': forms.Textarea(attrs={'cols':60, 'rows':10}),
-        }
+# class AddWordsForm1(forms.ModelForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['word'].label = ''
+#         self.fields['translation'].label = ''
+#
+#     class Meta:
+#         model = Words
+#         fields = ['word', 'translation']
+#         widgets = {
+#             'word': forms.Textarea(attrs={'cols':60, 'rows':10, 'placeholder': 'Type english text here'}),
+#             'translation': forms.Textarea(attrs={'cols':60, 'rows':10,
+#                                                  'placeholder': "Translation of your text appears here"}),
+#         }
 
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label='Login',
+                               widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "Your name/login"}))
+    email = forms.EmailField(label='Email', required=False,
+                             widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "not necessary"}))
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-
+    captcha = CaptchaField()
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')

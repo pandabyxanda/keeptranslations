@@ -24,6 +24,7 @@ from words.views import index, pageNotFound
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('words.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 handler404 = pageNotFound
