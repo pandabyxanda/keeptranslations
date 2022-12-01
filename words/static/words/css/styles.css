@@ -396,3 +396,13 @@ z-index: -1;
   transform: rotate(10deg)
 }
 
+.main_history{
+    margin: auto;
+}
+
+.ul_main_history {
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+}
+
