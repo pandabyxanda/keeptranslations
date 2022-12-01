@@ -9,11 +9,11 @@ from .models import *
 
 class AddWordsForm(forms.Form):
     word = forms.CharField(widget=forms.Textarea(
-        attrs={'cols':60, 'rows': 1, 'placeholder': 'Type english text here'}), label='')
+        attrs={'placeholder': 'Type english text here'}), label='', )
 
 class AddTranslationForm(forms.Form):
     translation = forms.CharField(widget=forms.Textarea(
-        attrs={'cols':60, 'rows': 1, 'placeholder': "Translation"}), label='')
+        attrs={'placeholder': "Translation"}), label='')
 
 # class AddWordsForm1(forms.ModelForm):
 #     def __init__(self, *args, **kwargs):

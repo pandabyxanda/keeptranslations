@@ -1,5 +1,5 @@
 {% extends 'words/base.html' %}
-
+{% load static %}
 
 {% block content %}
     <main>
@@ -27,15 +27,22 @@
 
 <!--                {{ form1 }}-->
     <!--            <input type="submit" value="Submit">-->
-                <button class="button_translate" type="submit">>>>></button>
+                <button class="button_translate" type="submit">
+<!--<img src="{% static '/words/images/star.png' %}" class="button_translate" type="submit">-->
+                    >>>></button>
+<!--                <img src="{% static '/words/images/star.png' %}" class="button_translate" type="submit">-->
+
             </form>
 
             <form class="main_form" action="{% url 'home' %}" method="post">
                 {% csrf_token %}
                 {{ form2 }}
-                <button class="button_save" type="submit">star</button>
+                <button class="button_save" type="submit"></button>
             </form>
+<!--        <img src="words/images/star.png" alt="star">-->
+<!--        <img src="{% static '/words/images/star.png' %}">-->
         </div>
+        <p>
 
 
 

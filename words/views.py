@@ -39,7 +39,7 @@ word_in_form1 = {'word': None}
 
 def index(request, *args, **kwargs):
     words = Words.objects.order_by('-pk')
-    paginator = Paginator(words, 1)
+    paginator = Paginator(words, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     print(f"{request.method = }")

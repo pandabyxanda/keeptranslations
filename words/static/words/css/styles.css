@@ -41,6 +41,8 @@ header {
 
 
 
+
+
     margin-right: var(--removed-body-scroll-bar-size);
     display: flex;
     flex-direction: column;
@@ -331,11 +333,31 @@ z-index: -1;
 .main_form{
     float: left;
     height: 100%;
+    width: 30%;
 
     align-items: left;
 
   display: flex;
 }
+
+#id_word, #id_translation{
+    background-color: #f4fafe;
+    width: 90%;
+    border: none;
+    border-radius: 0px;
+    resize: none;
+    -webkit-transition: 0.5s;
+    margin: 0px;
+    padding: 5px;
+    outline: none;
+
+}
+
+#id_word:focus, #id_translation:focus{
+    background-color: #e4f3fd;
+}
+
+
 
 .button_translate{
 
@@ -347,10 +369,30 @@ z-index: -1;
 }
 
 .button_save{
+    background-image: url("../images/star_1.png"); /* Путь к фоновому рисунку */
+    background-position: center center; /* Положение фона */
+    background-repeat: no-repeat;
 
-    align-items: left;
-    font-size: 16px;
+    align: middle;
+    align-items: center;
     margin: 0 auto auto 0;
-    height: 20%;
+    height: 50px;
 
+    width: 50px;
+    text-align: center;
+    border: 0;
+
+    background-color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    /*
+    border-radius: 100%;
+    */
 }
+.button_save:hover{
+    opacity: 0.8;
+}
+.button_save:active {
+  transform: rotate(10deg)
+}
+
