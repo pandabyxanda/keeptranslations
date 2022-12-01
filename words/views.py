@@ -1,4 +1,4 @@
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, get_user
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
@@ -38,7 +38,14 @@ word_in_form1 = {'word': None}
 #     return render(request, 'words/index.html', {'menu': menu, 'title': 'main pag'})
 
 def index(request, *args, **kwargs):
-    words = Words.objects.order_by('-pk')
+    # words = Words.objects.order_by('-pk')
+
+    current_user_name = get_user(request).username
+    current_user_id = get_user(request).id
+
+    print(f"{get_user(request) = }")
+    words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
+
     paginator = Paginator(words, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -62,10 +69,14 @@ def index(request, *args, **kwargs):
             form2 = AddTranslationForm(request.POST)
             # print(f"{form1.cleaned_data = }")
             # print(f"{form2.cleaned_data = }")
-            try:
-                Words.objects.create(word=last_word['word'], translation=request.POST.get('translation'))
-            except:
-                print("error adding to db")
+            # try:
+            Words.objects.create(
+                word=last_word['word'],
+                translation=request.POST.get('translation'),
+                user=get_user(request),
+            )
+            # except:
+            #     print("error adding to db")
 
     else:
         print(f"{last_word = }")
@@ -143,7 +154,20 @@ def index(request, *args, **kwargs):
 
 
 def saved(request, *args, **kwargs):
-    words = Words.objects.order_by('-pk')
+    # u1 = get_user(request).username
+
+    # u = get_user(request.user.username)
+
+    # print(f"{u1 = }")
+    # print(f"{u = }")
+    # words = Words.objects.order_by('-pk')
+
+    # current_user_id = get_user(request).id
+    # print(f"{current_user_id = }")
+    current_user_name = get_user(request).username
+    words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
+
+    # rWomen.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
     paginator = Paginator(words, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
