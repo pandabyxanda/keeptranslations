@@ -15,6 +15,10 @@ class AddTranslationForm(forms.Form):
     translation = forms.CharField(widget=forms.Textarea(
         attrs={'placeholder': "Translation"}), label='')
 
+class AddButtonDeletionForm(forms.Form):
+    pass
+
+
 # class AddWordsForm1(forms.ModelForm):
 #     def __init__(self, *args, **kwargs):
 #         super().__init__(*args, **kwargs)

@@ -32,6 +32,7 @@ menu = [{'title': 'Main page', 'url_name': 'home'},
         {'title': 'Login', 'url_name': 'login'},
 ]
 
+
 last_word = {'word': None}
 word_in_form1 = {'word': None}
 # def index(request, *args, **kwargs):
@@ -42,17 +43,48 @@ def index(request, *args, **kwargs):
 
     current_user_name = get_user(request).username
     current_user_id = get_user(request).id
+    print(f"{request.GET = }")
 
+    print(f"{request.POST = }")
     print(f"{get_user(request) = }")
+    print(f"{current_user_name = }")
+    print(f"{current_user_id = }")
+
+    button_forms = []
+    for i in range(0, 3):
+        button_forms.append(AddButtonDeletionForm)
+    button_form = AddButtonDeletionForm
+
     words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
 
     paginator = Paginator(words, 3)
+
+
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    print(f"{page_obj = }")
+    for i in page_obj:
+        print(f"{i.pk = }")
+
+
     print(f"{request.method = }")
     # Words.objects.create(word='235')
 
     if request.method == 'POST':
+        if request.POST.get('word_pk'):
+            print(f"{int(request.POST.get('word_pk')) = }")
+            print(f"{Words.objects.filter(pk=int(request.POST.get('word_pk'))) = }")
+            Words.objects.filter(pk=int(request.POST.get('word_pk'))).delete()
+
+            words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
+            paginator = Paginator(words, 3)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+
+        if not request.POST.get('word') and not request.POST.get('translation'):
+            form1 = AddWordsForm()
+            form2 = AddTranslationForm()
+
         if request.POST.get('word'):
             print(f"{request.POST.get('word') = }")
             last_word['word'] = request.POST.get('word')
@@ -70,10 +102,11 @@ def index(request, *args, **kwargs):
             # print(f"{form1.cleaned_data = }")
             # print(f"{form2.cleaned_data = }")
             # try:
-            Words.objects.create(
-                word=last_word['word'],
-                translation=request.POST.get('translation'),
-                user=get_user(request),
+            if current_user_id != None:
+                Words.objects.create(
+                    word=last_word['word'],
+                    translation=request.POST.get('translation'),
+                    user=get_user(request),
             )
             # except:
             #     print("error adding to db")
@@ -133,6 +166,8 @@ def index(request, *args, **kwargs):
         'form1': form1,
         'form2': form2,
         'page_obj': page_obj,
+        'current_user_id': current_user_id,
+        'button_form': button_form,
     }
 
     return render(request, 'words/index.html', context=context)
