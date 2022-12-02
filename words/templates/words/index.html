@@ -52,9 +52,9 @@
                 <li>
                     <h5>{{ w.word }}</h5>
                     {{ w.translation }}
-                    <form action="{% url 'home' %}" method="post">
+                    <form class="form_class_save_main" action="{% url 'home' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="word_pk" value={{w.pk}} >Del</button>
+                        <button class="button_unsave" type="submit" name="word_pk" value={{w.pk}} ></button>
 <!--                        {{button_form}}-->
                     </form>
                     <hr>

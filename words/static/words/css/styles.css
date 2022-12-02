@@ -96,12 +96,18 @@ header:hover{
 
 
 a:hover {
-    color: #da8ef8;
+    color: #1d71b6;
+    text-decoration: none;
 }
 
 /* изменение при наведении*/
 li:hover {
+    /*
     color: #1d71b6;
+    */
+
+    text-shadow: #687486 0px 0px 10px;
+
 
 
     /*
@@ -125,6 +131,18 @@ ul.mainmenu li {
 	float: left;
 	margin: 18px 40px 0 30px;
 }
+
+/*
+ul.mainmenu li:hover {
+    text-shadow: #FC0 1px 0 10px;
+    text-decoration: none;
+}
+
+*/
+
+
+
+
 ul.mainmenu li.logo {margin: 0;}
 ul.mainmenu li.last {float: right;}
 
@@ -265,7 +283,7 @@ z-index: -1;
 */
 
 .button1 {
-
+  height: 100%;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -274,10 +292,15 @@ z-index: -1;
   display: inline-block;
   font-size: 16px;
   transition-duration: 0.2s;
-      background: rgba(0,0,0,0.24);
-    /* opacity: 0.5; */
+  /*
+  background-color: transparent;
+  */
+  background: rgba(0,0,0,0.0);
 
-    backdrop-filter: blur(2px);
+    /* opacity: 0.5; */
+/*
+  backdrop-filter: blur(2px);
+  */
 }
 
 .button1:hover {
@@ -368,8 +391,16 @@ z-index: -1;
 
 }
 
+
+.form_class_save_main{
+    align: left;
+    align-items: left;
+    height: 50px;
+}
+
+
 .button_save{
-    background-image: url("../images/star_1.png"); /* Путь к фоновому рисунку */
+    background-image: url("../images/star (3).png"); /* Путь к фоновому рисунку */
     background-position: center center; /* Положение фона */
     background-repeat: no-repeat;
 
@@ -390,15 +421,80 @@ z-index: -1;
     */
 }
 .button_save:hover{
+
+    background-image: url("../images/star (4).png");
     opacity: 0.8;
 }
 .button_save:active {
+  background-image: url("../images/star (4).png");
   transform: rotate(10deg)
 }
+
+.button_unsave{
+    background-image: url("../images/star (4).png"); /* Путь к фоновому рисунку */
+    background-position: left; center;  /* Положение фона */
+    background-repeat: no-repeat;
+    align: left;
+    align-items: left;
+    margin: 0 auto auto 0;
+    height: 50px;
+
+    width: 200px;
+    text-align: center;
+    border: 0;
+
+    background-color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    /*
+    border-radius: 100%;
+    */
+}
+.button_unsave:hover{
+
+    background-image: url("../images/star (3).png");
+    opacity: 0.8;
+    height: 50px;
+}
+.button_unsave:active {
+  background-image: url("../images/star (3).png");
+  transform: rotate(10deg)
+}
+
+.button_unsave:hover::after {
+    content: "Delete";
+    width: 100px; /* Ширина подсказки */
+    float: right;
+    font-size: 1.0rem;
+
+    background: transparent; /* Синий цвет фона */
+    color: #fff; /* Цвет текста */
+
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3); /* Параметры тени */
+
+    pointer-events: none; /* Подсказка */
+    transition: 1s;
+
+    /*
+    content: attr(data-title);
+    */
+}
+
+
+
+
+
+
 
 .main_history{
     margin: auto;
 }
+
+
+
+
+
+
 
 .ul_main_history {
 	list-style: none;
