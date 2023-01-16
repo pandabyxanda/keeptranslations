@@ -1,0 +1,71 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<main>
+<!--    <h1>{{ title }}</h1>-->
+
+    <div>
+        All/learned/with good rating
+        <p>
+        {{ words_statistics.all }}/{{ words_statistics.learned_words }}/{{ words_statistics.words_with_good_rating }}
+        <hr>
+    </div>
+
+    <div>
+        <h4>{{ words_to_test.0.word }}</h4>
+    </div>
+
+    <div>
+        <form class="button_choose_answer_form" method="post">
+            {% csrf_token %}
+            <ul>
+                {% for w in answers_to_choose%}
+                <li>
+                    <button class="" type="submit" name="chosen_answer" value="{{w.translation}}">
+                        {{ w.translation }}
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+
+    <div>
+        {% if incorrect_answer_response_tip %}
+            {{incorrect_answer_response_tip}}
+        {% endif %}
+    </div>
+
+    <div>
+        {{answers_counter.correct_answers}} / {{answers_counter.questions}}
+    </div>
+
+    <div>
+        <form class="button_renew_answers_counter" method="post">
+            {% csrf_token %}
+            <button class="" type="submit" name="renew" value=True>
+                renew counter
+            </button>
+        </form>
+    </div>
+
+
+
+
+<!--    <div class="">-->
+<!--        <form class="" action="{% url 'test' %}" method="post">-->
+<!--            {% csrf_token %}-->
+<!--            {{ button_start_test_form }}-->
+<!--            <button class="" type="submit">-->
+<!--                Start test-->
+<!--            </button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+
+
+
+
+</main>
+{% endblock content %}

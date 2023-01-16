@@ -1,0 +1,46 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<main>
+<!--    <h1>{{ title }}</h1>-->
+    <div class="">
+        <form class="" method="post">
+            {% csrf_token %}
+            {{ form_input_number_of_words_to_learn }}
+            <button class="" type="submit">
+                Generate
+            </button>
+        </form>
+    </div>
+
+    <div>
+        <ul>
+            {% for w in page_obj %}
+            <li>
+                <h4>{{ w.word }}</h4>
+                {{ w.translation }}
+                <hr>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if page_obj %}
+        <div class="">
+            <form class="" action="{% url 'test' %}" method="post">
+                {% csrf_token %}
+                {{ button_start_test_form }}
+                <button class="" type="submit" name="add_words_to_test" value=True>
+                    Start test
+                </button>
+            </form>
+        </div>
+    {% endif %}
+
+
+
+
+
+
+</main>
+{% endblock content %}

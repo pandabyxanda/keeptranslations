@@ -4,16 +4,37 @@ from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 from .models import *
 
+
 # class AddWordsForm(forms.Form):
 #     word = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='', initial='type here')
 
 class AddWordsForm(forms.Form):
     word = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': 'Type english text here'}), label='', )
+        attrs={'placeholder': 'English text'}), label='', )
+
 
 class AddTranslationForm(forms.Form):
     translation = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': "Translation"}), label='')
+        attrs={'placeholder': "Russian translation"}), label='')
+
+
+class ChooseAmountOfWordsToLearnForm(forms.Form):
+    amount_of_words_to_learn = forms.IntegerField(widget=forms.NumberInput(
+        attrs={}), min_value=1, max_value=100, step_size=1, label='')
+
+# class ChooseAmountOfWordsToLearnForm(forms.Form):
+#     amount_of_words_to_learn = forms.IntegerField(widget=forms.NumberInput(
+#         attrs={'value': 5}), min_value=1, max_value=100, step_size=1, label='')
+
+class ButtonStartTestForm(forms.Form):
+    pass
+
+class ButtonChooseAnswerForm(forms.Form):
+    pass
+    # c = forms.ChoiceField()
+
+class ButtonRenewAnswersCounterForm(forms.Form):
+    pass
 
 class AddButtonDeletionForm(forms.Form):
     pass
@@ -35,7 +56,6 @@ class AddButtonDeletionForm(forms.Form):
 #         }
 
 
-
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Login',
                                widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "Your name/login"}))
@@ -44,6 +64,7 @@ class RegisterUserForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     captcha = CaptchaField()
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
@@ -64,4 +85,3 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Email')
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
     # captcha = CaptchaField(label='Captcha_y0')
-
