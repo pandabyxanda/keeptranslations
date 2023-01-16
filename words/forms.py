@@ -26,6 +26,15 @@ class ChooseAmountOfWordsToLearnForm(forms.Form):
 #     amount_of_words_to_learn = forms.IntegerField(widget=forms.NumberInput(
 #         attrs={'value': 5}), min_value=1, max_value=100, step_size=1, label='')
 
+class ButtonStartTestForm(forms.Form):
+    pass
+
+class ButtonChooseAnswerForm(forms.Form):
+    pass
+    # c = forms.ChoiceField()
+
+class ButtonRenewAnswersCounterForm(forms.Form):
+    pass
 
 class AddButtonDeletionForm(forms.Form):
     pass

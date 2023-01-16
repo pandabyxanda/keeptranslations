@@ -39,8 +39,10 @@ menu = [{'title': 'Main page', 'url_name': 'home'},
 
 last_word = {'word': None}
 word_in_form1 = {'word': None}
-words_to_learn = {'words': None}
+words_to_learn = {'words': None, 'words_to_test': None, 'incorrect_answer_response_tip': None}
+answers_counter = {'questions': 0, 'correct_answers': 0, 'mistakes': 0}
 amount_of_words_to_learn = {'number': 5}
+
 
 
 # def index(request, *args, **kwargs):
@@ -237,11 +239,13 @@ def learn(request, *args, **kwargs):
         amount_of_words_to_learn['number'] = int(request.POST['amount_of_words_to_learn'])
         current_user_name = get_user(request).username
 
-        pk_list = Words.objects.filter(user__username=current_user_name).values_list('pk', flat=True)
+        pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=False).values_list('pk', flat=True)
         pk_list = list(pk_list)
         pk_list_random = random.sample(pk_list, k=amount_of_words_to_learn['number'])
         words = Words.objects.filter(pk__in=pk_list_random)
         words_to_learn['words'] = words
+        words_to_learn['pk_list'] = pk_list_random
+
         print(f"{pk_list = }")
         print(f"{pk_list_random = }")
     # rWomen.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
@@ -257,12 +261,15 @@ def learn(request, *args, **kwargs):
     form_input_number_of_words_to_learn = ChooseAmountOfWordsToLearnForm(
         {'amount_of_words_to_learn': amount_of_words_to_learn['number']}
     )
+    button_start_test_form = ButtonStartTestForm()
+
 
     context = {
         'menu': menu,
         'title': menu[2]['title'],
         'page_obj': page_obj,
-        'form_input_number_of_words_to_learn': form_input_number_of_words_to_learn
+        'form_input_number_of_words_to_learn': form_input_number_of_words_to_learn,
+        'button_start_test_form': button_start_test_form,
     }
     # context = {
     #     'words': words,
@@ -278,7 +285,124 @@ def learn(request, *args, **kwargs):
 
 
 def test(request, *args, **kwargs):
-    pass
+    print("")
+    print("func test")
+    print(f"{request.method = }")
+    print(f"{request = }")
+    print(f"{request.POST = }")
+    print(f"{request.GET = }")
+
+    # try:
+    #     print(f"{request.POST.get('chosen_answer') = }")
+    #
+    #     print(f"{words_to_learn['words to test'][0].translation = }")
+    # except Exception:
+    #     print("Error...")
+
+
+    if request.method == 'POST' and 'add_words_to_test' in request.POST.keys():
+        print(f"{request.POST['add_words_to_test'] = }")
+        print(words_to_learn['words'])
+        # for i in words_to_learn['words']:
+        #     Words.objects.filter(active=True).update(status='inactive')
+        print(f"{words_to_learn['pk_list'] = }")
+
+        Words.objects.filter(pk__in=words_to_learn['pk_list']).update(learned=True)
+
+
+
+    current_user_name = get_user(request).username
+    if request.method == 'GET' or (request.method == 'POST' and 'add_words_to_test' in request.POST.keys()):
+        button_choose_answer_form = ButtonChooseAnswerForm()
+        # pk_list = Words.objects.filter(user__username=current_user_name).values_list('pk', flat=True)
+        pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', flat=True)
+        pk_list = list(pk_list)
+        number_of_words_to_test = 5
+        if len(pk_list) < number_of_words_to_test:
+            number_of_words_to_test = len(pk_list)
+        pk_list_random = random.sample(pk_list, k=number_of_words_to_test)
+        words = Words.objects.filter(pk__in=pk_list_random)
+        print(f"{pk_list_random = }")
+        words = list(words)
+        random.shuffle(words)
+        words_to_learn['words to test'] = [words[0]]
+        random.shuffle(words)
+        words_to_learn['answers to choose'] = words
+        words_to_learn['incorrect_answer_response_tip'] = None
+
+
+
+    else:
+        if request.method == 'POST':
+            if request.POST.get('chosen_answer') == words_to_learn['words to test'][0].translation:
+                print("correct")
+                button_choose_answer_form = ButtonChooseAnswerForm()
+                pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', flat=True)
+                pk_list = list(pk_list)
+                number_of_words_to_test = 5
+                if len(pk_list) < number_of_words_to_test:
+                    number_of_words_to_test = len(pk_list)
+                pk_list_random = random.sample(pk_list, k=number_of_words_to_test)
+                words = Words.objects.filter(pk__in=pk_list_random)
+                words = list(words)
+                random.shuffle(words)
+                words_to_learn['words to test'] = [words[0]]
+                random.shuffle(words)
+                words_to_learn['answers to choose'] = words
+                words_to_learn['incorrect_answer_response_tip'] = None
+
+                answers_counter['correct_answers'] += 1
+                answers_counter['questions'] += 1
+
+                words_to_learn['words to test'][0].learning_rating += 1
+                words_to_learn['words to test'][0].save()
+            else:
+                button_choose_answer_form = ButtonChooseAnswerForm()
+                words_to_learn['words to test'][0].learning_rating -= 1
+                words_to_learn['words to test'][0].save()
+                # Words.objects.filter(pk__in=words_to_learn['pk_list']).update(learning_rating=True)
+                if request.POST.get('renew') == 'True':
+                    answers_counter['questions'] = 0
+                    answers_counter['correct_answers'] = 0
+                else:
+                    if words_to_learn['incorrect_answer_response_tip'] == None:
+                        words_to_learn['incorrect_answer_response_tip'] = "Try again"
+                    else:
+                        words_to_learn['incorrect_answer_response_tip'] += " and again"
+                    answers_counter['questions'] += 1
+
+
+
+    # print(f"{pk_list = }")
+    # print(f"{words_to_learn['words to test'] = }")
+    button_renew_answers_counter = ButtonRenewAnswersCounterForm()
+
+
+
+    number_of_all_rows_in_db = Words.objects.count()
+    number_of_learned_words_in_db = Words.objects.filter(learned=True).count()
+    number_of_words_with_good_rating = Words.objects.filter(learning_rating__gt=1).count()
+    # print(f"{number_of_all_rows_in_db = }")
+    # print(f"{number_of_learned_words_in_db = }")
+    # print(f"{number_of_words_with_good_rating = }")
+    words_statistics = {
+        'all': number_of_all_rows_in_db,
+        'learned_words': number_of_learned_words_in_db,
+        'words_with_good_rating': number_of_words_with_good_rating,
+    }
+
+    context = {
+        'menu': menu,
+        'title': menu[3]['title'],
+        'words_to_test': words_to_learn['words to test'],
+        'answers_to_choose': words_to_learn['answers to choose'],
+        'button_choose_answer_form': button_choose_answer_form,
+        'incorrect_answer_response_tip': words_to_learn['incorrect_answer_response_tip'],
+        'answers_counter': answers_counter,
+        'button_renew_answers_counter': button_renew_answers_counter,
+        'words_statistics': words_statistics,
+    }
+    return render(request, 'words/test.html', context=context)
 
 
 def about(request, *args, **kwargs):

@@ -25,6 +25,18 @@
         </ul>
     </div>
 
+    {% if page_obj %}
+        <div class="">
+            <form class="" action="{% url 'test' %}" method="post">
+                {% csrf_token %}
+                {{ button_start_test_form }}
+                <button class="" type="submit" name="add_words_to_test" value=True>
+                    Start test
+                </button>
+            </form>
+        </div>
+    {% endif %}
+
 
 
 
