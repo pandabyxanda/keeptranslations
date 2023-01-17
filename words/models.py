@@ -16,7 +16,7 @@ class Words(models.Model):
 
     starred1 = models.BooleanField(default=False)
     learned = models.BooleanField(default=False)
-    learning_rating = models.IntegerField(default=0, blank=True)
+    learning_rating = models.IntegerField(default=10, blank=True)
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, default=1)
 

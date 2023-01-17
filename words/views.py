@@ -1,5 +1,6 @@
 import random
 
+import numpy
 from django.contrib.auth import logout, login, get_user
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
@@ -67,7 +68,7 @@ def index(request, *args, **kwargs):
 
     words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
 
-    paginator = Paginator(words, 3)
+    paginator = Paginator(words, 6)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -206,7 +207,7 @@ def saved(request, *args, **kwargs):
     words = Words.objects.filter(user__username=current_user_name).order_by('-pk')
 
     # rWomen.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
-    paginator = Paginator(words, 5)
+    paginator = Paginator(words, 30)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -292,6 +293,36 @@ def test(request, *args, **kwargs):
     print(f"{request.POST = }")
     print(f"{request.GET = }")
 
+    # from openpyxl import Workbook, load_workbook
+    #
+    # workbook = load_workbook(filename="words/Saved translations.xlsx")
+    #
+    # sheets = workbook.sheetnames
+    # sheet = workbook.active
+    # print(f"{sheets = }")
+    # print(f"{sheet = }")
+    #
+    # res = sheet["B123:B202"]
+    # words = [x[0].value for x in res]
+    # print(f"{words = }")
+    #
+    # res = sheet["C123:C202"]
+    # translations = [x[0].value for x in res]
+    # print(f"{translations = }")
+    #
+    # list1 = []
+    #
+    # for i in range(len(words)):
+    #     list1.append(Words(word=words[i], translation=translations[i]))
+    #
+    # # for i in range(10):
+    # #     list1.append(Words(word=words[i], translation=translations[i]))
+    #
+    # Words.objects.bulk_create(list1)
+
+    # Words.objects.all().update(learning_rating=10)
+
+
     # try:
     #     print(f"{request.POST.get('chosen_answer') = }")
     #
@@ -299,6 +330,7 @@ def test(request, *args, **kwargs):
     # except Exception:
     #     print("Error...")
 
+    number_of_words_to_test = 10
 
     if request.method == 'POST' and 'add_words_to_test' in request.POST.keys():
         print(f"{request.POST['add_words_to_test'] = }")
@@ -317,7 +349,6 @@ def test(request, *args, **kwargs):
         # pk_list = Words.objects.filter(user__username=current_user_name).values_list('pk', flat=True)
         pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', flat=True)
         pk_list = list(pk_list)
-        number_of_words_to_test = 5
         if len(pk_list) < number_of_words_to_test:
             number_of_words_to_test = len(pk_list)
         pk_list_random = random.sample(pk_list, k=number_of_words_to_test)
@@ -336,13 +367,39 @@ def test(request, *args, **kwargs):
         if request.method == 'POST':
             if request.POST.get('chosen_answer') == words_to_learn['words to test'][0].translation:
                 print("correct")
+
+
+                answers_counter['correct_answers'] += 1
+                answers_counter['questions'] += 1
+                if words_to_learn['words to test'][0].learning_rating > 1:
+                    words_to_learn['words to test'][0].learning_rating -= 1
+                words_to_learn['words to test'][0].save()
+
                 button_choose_answer_form = ButtonChooseAnswerForm()
-                pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', flat=True)
-                pk_list = list(pk_list)
-                number_of_words_to_test = 5
+                # pk_list = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', flat=True)
+                records = Words.objects.filter(user__username=current_user_name).filter(learned=True).values_list('pk', 'learning_rating')
+
+                # print(f"{records = }")
+                pk_list = [record[0] for record in records]
+                learning_rating_list = [record[1] for record in records]
+                # print(pk_list)
+                # print(learning_rating_list)
+
+                # pk_list = list(pk_list)
                 if len(pk_list) < number_of_words_to_test:
                     number_of_words_to_test = len(pk_list)
-                pk_list_random = random.sample(pk_list, k=number_of_words_to_test)
+
+
+                # lst1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                # lst2 = [1, 3, 1, 1, 1, 1, 1, 1, 1, 1]
+                rates_for_choose = [x / sum(learning_rating_list) for x in learning_rating_list]
+                # print([round(x, 3) for x in rates_for_choose])
+                pk_list_random = numpy.random.choice(pk_list, p=rates_for_choose, size=number_of_words_to_test, replace=False)
+                # print(f"{list(pk_list_random) = }")
+
+
+
+                # pk_list_random = random.sample(pk_list, k=number_of_words_to_test)
                 words = Words.objects.filter(pk__in=pk_list_random)
                 words = list(words)
                 random.shuffle(words)
@@ -350,16 +407,8 @@ def test(request, *args, **kwargs):
                 random.shuffle(words)
                 words_to_learn['answers to choose'] = words
                 words_to_learn['incorrect_answer_response_tip'] = None
-
-                answers_counter['correct_answers'] += 1
-                answers_counter['questions'] += 1
-
-                words_to_learn['words to test'][0].learning_rating += 1
-                words_to_learn['words to test'][0].save()
             else:
                 button_choose_answer_form = ButtonChooseAnswerForm()
-                words_to_learn['words to test'][0].learning_rating -= 1
-                words_to_learn['words to test'][0].save()
                 # Words.objects.filter(pk__in=words_to_learn['pk_list']).update(learning_rating=True)
                 if request.POST.get('renew') == 'True':
                     answers_counter['questions'] = 0
@@ -371,6 +420,9 @@ def test(request, *args, **kwargs):
                         words_to_learn['incorrect_answer_response_tip'] += " and again"
                     answers_counter['questions'] += 1
 
+                    words_to_learn['words to test'][0].learning_rating += 1
+                    words_to_learn['words to test'][0].save()
+
 
 
     # print(f"{pk_list = }")
@@ -381,7 +433,7 @@ def test(request, *args, **kwargs):
 
     number_of_all_rows_in_db = Words.objects.count()
     number_of_learned_words_in_db = Words.objects.filter(learned=True).count()
-    number_of_words_with_good_rating = Words.objects.filter(learning_rating__gt=1).count()
+    number_of_words_with_good_rating = Words.objects.filter(learning_rating__lt=10).count()
     # print(f"{number_of_all_rows_in_db = }")
     # print(f"{number_of_learned_words_in_db = }")
     # print(f"{number_of_words_with_good_rating = }")

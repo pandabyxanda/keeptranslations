@@ -5,14 +5,16 @@
 <!--    <h1>{{ title }}</h1>-->
 
     <div>
-        All/learned/with good rating
+        All / learned / test passed
         <p>
-        {{ words_statistics.all }}/{{ words_statistics.learned_words }}/{{ words_statistics.words_with_good_rating }}
+        {{ words_statistics.all }} / {{ words_statistics.learned_words }} / {{ words_statistics.words_with_good_rating }}
         <hr>
     </div>
 
     <div>
-        <h4>{{ words_to_test.0.word }}</h4>
+        <h2>{{ words_to_test.0.word }}</h2>
+        <p>Learning rating: {{ words_to_test.0.learning_rating }}</p>
+        <hr>
     </div>
 
     <div>
@@ -28,6 +30,7 @@
                 {% endfor %}
             </ul>
         </form>
+        <hr>
     </div>
 
     <div>
