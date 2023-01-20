@@ -3,19 +3,40 @@
 {% block content %}
 <main>
 <!--    <h1>{{ title }}</h1>-->
-    <div>
-        <ul>
-            {% for w in page_obj %}
-            <li>
-                <h4>{{ w.pk }} {{ w.word }}</h4>
-                {{ w.translation }}
-                <hr>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="main_history">
+        <form class="form_class_save_main" action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <ul class="ul_main_history">
+                {% for w in page_obj %}
+                <li>
+                    <button class="" type="submit" name="change_word" value={{w.pk}} >
+                        <h5>{{ w.word }}</h5>
+                        {{ w.translation }}
+                    </button>
+
+                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
+                    <hr>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
     </div>
+    <div></div>
 
+<!--    <div>-->
+<!--        <ul>-->
+<!--            {% for w in page_obj %}-->
+<!--            <li>-->
+<!--                <h4>{{ w.pk }} {{ w.word }}</h4>-->
+<!--                {{ w.translation }}-->
+<!--                <hr>-->
+<!--            </li>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--    </div>-->
 
+<!--Pagination-->
+    <p></p>
     <div class="center">
         <div class="pagination">
             <ul class="pag1">

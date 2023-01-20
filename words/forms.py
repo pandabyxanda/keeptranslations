@@ -8,14 +8,23 @@ from .models import *
 # class AddWordsForm(forms.Form):
 #     word = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label='', initial='type here')
 
-class AddWordsForm(forms.Form):
+# class AddWordsForm(forms.Form):
+#     word = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'English text'}), label='', )
+#
+#
+# class AddTranslationForm(forms.Form):
+#     translation = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': "Russian translation"}), label='')
+
+class WordTranslationForm(forms.Form):
     word = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': 'English text'}), label='', )
-
-
-class AddTranslationForm(forms.Form):
+        attrs={'placeholder': 'English text'}), label='', required=False)
     translation = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': "Russian translation"}), label='')
+        attrs={'placeholder': "Russian translation"}), label='', required=False)
+
+
+
 
 
 class ChooseAmountOfWordsToLearnForm(forms.Form):
@@ -39,6 +48,8 @@ class ButtonRenewAnswersCounterForm(forms.Form):
 class AddButtonDeletionForm(forms.Form):
     pass
 
+class SwitchLanguageForTest(forms.Form):
+    pass
 
 # class AddWordsForm1(forms.ModelForm):
 #     def __init__(self, *args, **kwargs):
