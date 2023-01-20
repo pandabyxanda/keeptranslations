@@ -3,81 +3,42 @@
 
 {% block content %}
 <main>
-<!--        <h1>{{ title }}</h1>-->
-<!--        en → ru-->
-<!--        <form action="{% url 'home' %}" method="post">-->
-<!--            {% csrf_token %}-->
-<!--&lt;!&ndash;            <div class="card" data-tilt>&ndash;&gt;-->
-<!--            {{ form3 }}-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <p>-->
-<!--            <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>">-->
-<!--&lt;!&ndash;            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>&ndash;&gt;-->
-<!--            <input type="button" onclick="alert('Hello World!')" value="Click Me!">-->
-<!--        </form>-->
+    <div class="main_form_block">
+<!--        <form class="main_form" action="{% url 'home' %}" method="post">-->
+        <form class="main_form" method="post">
+            {% csrf_token %}
+            {{ form1.word }}
+                <button class="button_translate" type="submit" name="do_translate" value=True>
+                    >>>>
+                </button>
+            {{ form1.translation }}
+            {% if current_user_id != None %}
+                <button class="button_save" type="submit" name="do_save" value=True></button>
+            {% endif %}
+        </form>
+    </div>
 
 
-        <div class="main_form_block">
-            <form class="main_form" action="{% url 'home' %}" method="post">
-                {% csrf_token %}
-
-                {% for f in form1 %}
-                    {{ f }}
-                {% endfor %}
-
-<!--                {{ form1 }}-->
-    <!--            <input type="submit" value="Submit">-->
-                <button class="button_translate" type="submit">
-<!--<img src="{% static '/words/images/star.png' %}" class="button_translate" type="submit">-->
-                    >>>></button>
-<!--                <img src="{% static '/words/images/star.png' %}" class="button_translate" type="submit">-->
-
-            </form>
-
-            <form class="main_form" action="{% url 'home' %}" method="post">
-                {% csrf_token %}
-                {{ form2 }}
-                {% if current_user_id != None %}
-                    <button class="button_save" type="submit"></button>
-                {% endif %}
-            </form>
-<!--        <img src="words/images/star.png" alt="star">-->
-<!--        <img src="{% static '/words/images/star.png' %}">-->
-        </div>
-
-
-        <div class="main_history">
+    <div class="main_history">
+        <form class="form_class_save_main" action="{% url 'home' %}" method="post">
+            {% csrf_token %}
             <ul class="ul_main_history">
                 {% for w in page_obj %}
                 <li>
-                    <h5>{{ w.word }}</h5>
-                    {{ w.translation }}
-                    <form class="form_class_save_main" action="{% url 'home' %}" method="post">
-                        {% csrf_token %}
-                        <button class="button_unsave" type="submit" name="word_pk" value={{w.pk}} ></button>
-<!--                        {{button_form}}-->
-                    </form>
+                    <button class="" type="submit" name="change_word" value={{w.pk}} >
+                        <h5>{{ w.word }}</h5>
+                        {{ w.translation }}
+                    </button>
+
+                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
                     <hr>
                 </li>
                 {% endfor %}
             </ul>
-        </div>
+        </form>
+    </div>
 
 
-<!--        <div class="main_history">-->
-<!--            <ul class="ul_main_history">-->
-<!--                {% for b in button_forms %}-->
-<!--                <li>-->
-<!--                    <form action="{% url 'home' %}" method="post">-->
-<!--                        {% csrf_token %}-->
-<!--                        {{b}}-->
-<!--                        <button type="submit" name="dataNamelol" value="dataValuelol" >Del</button>-->
-<!--                    </form>-->
-<!--                    <hr>-->
-<!--                </li>-->
-<!--                {% endfor %}-->
-<!--            </ul>-->
-<!--        </div>-->
 
 </main>
 {% endblock content %}

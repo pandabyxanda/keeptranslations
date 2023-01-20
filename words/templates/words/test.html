@@ -5,14 +5,33 @@
 <!--    <h1>{{ title }}</h1>-->
 
     <div>
-        All/learned/with good rating
+<!--        <label class="switch">-->
+<!--        <input type="checkbox">-->
+<!--        <span class="slider"></span>-->
+<!--        </label>-->
+
+        <form method="post">
+            {% csrf_token %}
+            <button class="button_save" type="submit" name="change_lang" value=True></button>
+        </form>
+
+    </div>
+
+
+
+
+
+    <div>
+        All / learned / test passed
         <p>
-        {{ words_statistics.all }}/{{ words_statistics.learned_words }}/{{ words_statistics.words_with_good_rating }}
+        {{ words_statistics.all }} / {{ words_statistics.learned_words }} / {{ words_statistics.words_with_good_rating }}
         <hr>
     </div>
 
     <div>
-        <h4>{{ words_to_test.0.word }}</h4>
+        <h2>{{ word_to_test }}</h2>
+        <p>Learning rating: {{ leaning_rating }}</p>
+        <hr>
     </div>
 
     <div>
@@ -21,30 +40,32 @@
             <ul>
                 {% for w in answers_to_choose%}
                 <li>
-                    <button class="" type="submit" name="chosen_answer" value="{{w.translation}}">
-                        {{ w.translation }}
+                    <button class="" type="submit" name="chosen_answer" value="{{ w }}">
+                        {{ w }}
                     </button>
                 </li>
                 {% endfor %}
             </ul>
         </form>
+        {{answers_to_choose_rating}}
+        <hr>
     </div>
 
-    <div>
-        {% if incorrect_answer_response_tip %}
-            {{incorrect_answer_response_tip}}
-        {% endif %}
-    </div>
+<!--    <div>-->
+<!--        {% if incorrect_answer_response_tip %}-->
+<!--            {{incorrect_answer_response_tip}}-->
+<!--        {% endif %}-->
+<!--    </div>-->
 
-    <div>
-        {{answers_counter.correct_answers}} / {{answers_counter.questions}}
-    </div>
+<!--    <div>-->
+<!--        {{answers_counter.correct_answers}} / {{answers_counter.questions}}-->
+<!--    </div>-->
 
     <div>
         <form class="button_renew_answers_counter" method="post">
             {% csrf_token %}
             <button class="" type="submit" name="renew" value=True>
-                renew counter
+                {{answers_counter.correct_answers}} / {{answers_counter.questions}} refresh
             </button>
         </form>
     </div>
