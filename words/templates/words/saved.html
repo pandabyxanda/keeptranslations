@@ -8,14 +8,12 @@
             {% csrf_token %}
             <ul class="ul_main_history">
                 {% for w in page_obj %}
-                <li>
-                    <button class="" type="submit" name="change_word" value={{w.pk}} >
-                        <h5>{{ w.word }}</h5>
+                <li class="li_main_history">
+                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
+                    <button class="main_history_word_button" type="submit" name="change_word" value={{w.pk}} >
+                        <h5 class="main_history_word_h5">{{ w.word }}</h5>
                         {{ w.translation }}
                     </button>
-
-                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
-                    <hr>
                 </li>
                 {% endfor %}
             </ul>
@@ -40,15 +38,59 @@
     <div class="center">
         <div class="pagination">
             <ul class="pag1">
-                {% for p in page_obj.paginator.page_range %}
+                {% if page_obj.has_previous %}
                 <li>
-                    <a href="?page={{ p }}">{{ p }}</a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
                 </li>
+                {% endif %}
+
+                {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li>
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 or forloop.first or forloop.last %}
+                        <li>
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                </li>
+                {% endif %}
             </ul>
 
         </div>
     </div>
+
+<!--<ul>-->
+<!--		{% if page_obj.has_previous %}-->
+<!--		<li class="page-num">-->
+<!--			<a href="?page={{ page_obj.previous_page_number }}">&lt;</a>-->
+<!--		</li>-->
+<!--		{% endif %}-->
+
+<!--		{% for p in paginator.page_range %}-->
+<!--		{% if page_obj.number == p %}-->
+<!--		<li class="page-num page-num-selected">{{ p }}</li>-->
+<!--		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}-->
+<!--		<li class="page-num">-->
+<!--			<a href="?page={{ p }}">{{ p }}</a>-->
+<!--		</li>-->
+<!--		{% endif %}-->
+<!--		{% endfor %}-->
+
+<!--		{% if page_obj.has_next %}-->
+<!--		<li class="page-num">-->
+<!--			<a href="?page={{ page_obj.next_page_number }}">&gt;</a>-->
+<!--		</li>-->
+<!--		{% endif %}-->
+
+
+<!--	</ul>-->
 
 
 
