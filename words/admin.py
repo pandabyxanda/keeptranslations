@@ -6,7 +6,7 @@ from .models import *
 
 
 class WordsAdmin(admin.ModelAdmin):
-    list_display = ('word', 'translation', 'time_created', 'starred', 'user')
+    list_display = ('word', 'translation', 'time_created', 'starred')
     list_display_links = ('word',)
     search_fields = ('word', 'translation')
     list_filter = ('word', 'translation')

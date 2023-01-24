@@ -1,3 +1,4 @@
+from django.contrib.sessions.models import Session
 from django.db import models
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Words(models.Model):
     learned = models.BooleanField(default=False)
     learning_rating = models.IntegerField(default=10, blank=True)
 
-    user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, default=1)
+    user_and_session = models.ForeignKey('User_And_Session', on_delete=models.PROTECT, blank=True, default=1)
 
     # for admin panel
     def __str__(self):
@@ -33,3 +34,12 @@ class Words(models.Model):
         verbose_name_plural = 'words__'
         ordering = ['-pk',]
 
+class User_And_Session(models.Model):
+    time_created = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True, default=None)
+    session = models.ForeignKey(Session, null=True, on_delete=models.SET_NULL, blank=True, default=None)
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=100, db_index=True, verbose_name='Категория')
+#     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')

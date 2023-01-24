@@ -3,42 +3,44 @@
 
 {% block content %}
 <main>
-    <div class="main_form_block">
-<!--        <form class="main_form" action="{% url 'home' %}" method="post">-->
-        <form class="main_form" method="post">
-            {% csrf_token %}
-            {{ form1.word }}
-                <button class="button_translate" type="submit" name="do_translate" value=True>
-                    ▷
-                    ▷
-                    ▷
-                </button>
-            {{ form1.translation }}
-            {% if current_user_id != None %}
-                <button class="button_save" type="submit" name="do_save" value=True></button>
-            {% endif %}
-        </form>
-    </div>
-
-
-    <div class="main_history">
-        <form class="form_class_save_main" action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-            <ul class="ul_main_history">
-                {% for w in page_obj %}
-                <li class="li_main_history">
-                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
-                    <button class="main_history_word_button" type="submit" name="change_word" value={{w.pk}} >
-                        <h5 class="main_history_word_h5">{{ w.word }}</h5>
-                        {{ w.translation }}
+    <div class="main_all">
+        <div class="main_form_block">
+    <!--        <form class="main_form" action="{% url 'home' %}" method="post">-->
+            <form class="main_form" method="post">
+                {% csrf_token %}
+                {{ form1.word }}
+                    <button class="button_translate" type="submit" name="do_translate" value=True>
+                        ▷
+                        ▷
+                        ▷
                     </button>
+                {{ form1.translation }}
+
+                <button class="button_save" type="submit" name="do_save" value=True></button>
+
+            </form>
+        </div>
 
 
-<!--                    <hr>-->
-                </li>
-                {% endfor %}
-            </ul>
-        </form>
+        <div class="main_history">
+            <form class="form_class_save_main" action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+                <ul class="ul_main_history">
+                    {% for w in page_obj %}
+                    <li class="li_main_history">
+                        <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
+                        <button class="main_history_word_button" type="submit" name="change_word" value={{w.pk}} >
+                            <h5 class="main_history_word_h5">{{ w.word }}</h5>
+                            {{ w.translation }}
+                        </button>
+
+
+    <!--                    <hr>-->
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
     </div>
 
 

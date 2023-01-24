@@ -4,43 +4,60 @@
 <main>
 <!--    <h1>{{ title }}</h1>-->
 
-    <div>
+    <div class="test_all">
 <!--        <label class="switch">-->
 <!--        <input type="checkbox">-->
 <!--        <span class="slider"></span>-->
 <!--        </label>-->
-
+    <div class="test_block">
         <form method="post">
             {% csrf_token %}
-            <button class="button_save" type="submit" name="change_lang" value=True></button>
+            Testing word in
+            {% if lang == 'EN' %}
+                <button class="button_change_lang" type="submit" name="change_lang" value=RU>
+                    {{ lang }}
+                </button>
+            {% else %}
+                <button class="button_change_lang" type="submit" name="change_lang" value=EN>
+                    {{ lang }}
+                </button>
+            {% endif %}
         </form>
-
     </div>
 
 
 
 
 
-    <div>
+
+    <div class="test_block">
+
         All / learned / test passed
-        <p>
+
         {{ words_statistics.all }} / {{ words_statistics.learned_words }} / {{ words_statistics.words_with_good_rating }}
-        <hr>
+
+
     </div>
 
-    <div>
-        <h2>{{ word_to_test }}</h2>
-        <p>Learning rating: {{ leaning_rating }}</p>
-        <hr>
+    <hr>
+
+    <div class="test_block">
+        <div class="test_word">
+            <h2 class="test_h2">{{ word_to_test }}</h2>
+            <p class="test_p">(rating: {{ leaning_rating }})</p>
+        </div>
     </div>
+
+    <hr>
+
 
     <div>
         <form class="button_choose_answer_form" method="post">
             {% csrf_token %}
-            <ul>
+            <ul class="ul_test">
                 {% for w in answers_to_choose%}
-                <li>
-                    <button class="" type="submit" name="chosen_answer" value="{{ w }}">
+                <li class="li_test">
+                    <button class="test_answer_button" type="submit" name="chosen_answer" value="{{ w }}">
                         {{ w }}
                     </button>
                 </li>
@@ -61,7 +78,7 @@
 <!--        {{answers_counter.correct_answers}} / {{answers_counter.questions}}-->
 <!--    </div>-->
 
-    <div>
+    <div class="test_block">
         <form class="button_renew_answers_counter" method="post">
             {% csrf_token %}
             <button class="" type="submit" name="renew" value=True>
@@ -86,7 +103,7 @@
 
 
 
-
+    </div>
 
 </main>
 {% endblock content %}

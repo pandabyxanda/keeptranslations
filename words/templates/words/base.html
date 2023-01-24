@@ -34,9 +34,7 @@
 
                 {% endfor %}
                 {% if request.user.is_authenticated %}
-                    <li class="last">Logged as {{user.username}} | <a href="{% url 'logout' %}">
-                    <button class="button1">Logout</button>
-                    </a></li>
+                    <li class="last">{{ user.username }}   <a href="{% url 'logout' %}"> Logout</a></li>
                 {% else %}
                     <li class="last"><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a></li>
                 {%endif %}
