@@ -23,8 +23,9 @@ class WordTranslationForm(forms.Form):
     translation = forms.CharField(widget=forms.Textarea(
         attrs={'placeholder': "Russian translation"}), label='', required=False)
 
-
-
+class Choose_collection_form(forms.Form):
+    pass
+    # collection = forms.ModelChoiceField(queryset=Collection.objects.all(), empty_label="(Nothing)")
 
 
 class ChooseAmountOfWordsToLearnForm(forms.Form):
@@ -68,13 +69,23 @@ class SwitchLanguageForTest(forms.Form):
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Login',
-                               widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "Your name/login"}))
-    email = forms.EmailField(label='Email', required=False,
-                             widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "not necessary"}))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    captcha = CaptchaField()
+    username = forms.CharField(
+        label='Login',
+        widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "login"})
+    )
+    email = forms.EmailField(
+        label='Email', required=False,
+        widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "email (not necessary)"})
+    )
+    password1 = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'password'})
+    )
+    password2 = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'password'})
+    )
+    # captcha = CaptchaField()
 
     class Meta:
         model = User
@@ -87,8 +98,8 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label='Login', widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "login"}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': "password"}))
 
 
 class ContactForm(forms.Form):
@@ -96,3 +107,22 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Email')
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
     # captcha = CaptchaField(label='Captcha_y0')
+
+
+# class RegisterUserForm(UserCreationForm):
+#     username = forms.CharField(label='Login',
+#                                widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "Your name/login"}))
+#     email = forms.EmailField(label='Email', required=False,
+#                              widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': "not necessary"}))
+#     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+#     password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+#     captcha = CaptchaField()
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email', 'password1', 'password2')
+#         # widgets = {
+#         #     'username': forms.TextInput(attrs={'class': 'form-input'}),
+#         #     'password1': forms.PasswordInput(attrs={'class': 'form-input'}),
+#         #     'password2': forms.PasswordInput(attrs={'class': 'form-input'}),
+#         #           }

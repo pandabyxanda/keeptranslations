@@ -20,6 +20,8 @@ class Migration(migrations.Migration):
                 ('time_created', models.DateTimeField(auto_now_add=True)),
                 ('time_updated', models.DateTimeField(auto_now=True)),
                 ('starred', models.BooleanField(default=False)),
+                ('learned', models.BooleanField(default=False)),
+                ('learning_rating', models.IntegerField(default=10, blank=True)),
             ],
             options={
                 'verbose_name': 'words__',

@@ -1,0 +1,34 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<main>
+    <div class="collections_all">
+
+        <form method="post" action="{% url 'collections' %}">
+            {% csrf_token %}
+            <select name='Choose_collection' onchange="form.submit()">
+                    <option value={{Null}}>Choose collection</option>
+                {% for ch in choose_collection %}
+                    {% if ch.name == collection_name %}
+                        <option value={{ch}} selected>{{ch}}</option>
+                    {% else %}
+                        <option value={{ch}}>{{ch}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </form>
+
+        {% for w in words_records %}
+            <p> {{ w.word }}
+        {% endfor %}
+
+    {% if words_records %}
+        <form method="post" action="{% url 'collections' %}">
+            {% csrf_token %}
+            <button class="" type="submit" name=collection_name_to_save value={{collection_name}} >Save this collection</button>
+        </form>
+    {% endif %}
+
+    </div>
+</main>
+{% endblock content %}
