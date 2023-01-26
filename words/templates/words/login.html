@@ -3,24 +3,25 @@
 
 {% block content %}
 <main>
-        <h1>{{ title }}</h1>
-        <form method="post">
+    <div class="login_all">
+        <form  class="login_form" method="post">
             {% csrf_token %}
 <!--            <div class="card" data-tilt>-->
 <!--            {{ form.as_p }}-->
 <!--            </div>-->
             {% for f in form %}
-                <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }} </p>
+<!--                <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label></p> </p>{{ f }} </p>-->
+                <p>{{ f }}
                 <div class="form-error">{{f.errors}}</div>
             {% endfor %}
 
 
-            <button type="submit">
+            <button class="login_button" type="submit">
 <!--                <a href="{% url 'home' %}">-->
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    Log in
             </button>
 <!--            <input type="submit" value="Submit">-->
         </form>
-
+    <div>
 </main>
 {% endblock content %}

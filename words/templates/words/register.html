@@ -3,24 +3,26 @@
 
 {% block content %}
 <main>
-        <h1>{{ title }}</h1>
-        <form method="post">
+    <div class="signin_all">
+<!--        <h2>{{ title }}</h1>-->
+        <form class="signin_form" method="post">
             {% csrf_token %}
 <!--            <div class="card" data-tilt>-->
 <!--            {{ form.as_p }}-->
 <!--            </div>-->
             {% for f in form %}
-                <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }} </p>
+<!--                <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }} </p>-->
+                <p>{{ f }}
                 <div class="form-error">{{f.errors}}</div>
             {% endfor %}
 
 
 
-            <input type="submit" value="Submit">
-<!--            <button type="submit">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></button>-->
+<!--            <input class="signin_button" type="submit" value="Submit">-->
+            <button class="signin_button" type="submit" value="Submit">Sign in</button>
 <!--            <input type="button" onclick="alert('Hello World!')" value="Click Me!">-->
         </form>
-
+    </div>
 </main>
 {% endblock content %}
 

@@ -3,107 +3,111 @@
 {% block content %}
 <main>
 <!--    <h1>{{ title }}</h1>-->
-
-    <div class="test_all">
-<!--        <label class="switch">-->
-<!--        <input type="checkbox">-->
-<!--        <span class="slider"></span>-->
-<!--        </label>-->
-    <div class="test_block">
-        <form method="post">
-            {% csrf_token %}
-            Testing word in
-            {% if lang == 'EN' %}
-                <button class="button_change_lang" type="submit" name="change_lang" value=RU>
+    {% if word_to_test %}
+        <div class="test_all">
+    <!--        <label class="switch">-->
+    <!--        <input type="checkbox">-->
+    <!--        <span class="slider"></span>-->
+    <!--        </label>-->
+        <div class="test_block">
+            <form method="post">
+                {% csrf_token %}
+                Testing word in
+                <button class="button_change_lang" type="submit" name="change_lang" value=True>
                     {{ lang }}
                 </button>
-            {% else %}
-                <button class="button_change_lang" type="submit" name="change_lang" value=EN>
-                    {{ lang }}
-                </button>
-            {% endif %}
-        </form>
-    </div>
-
-
-
-
-
-
-    <div class="test_block">
-
-        All / learned / test passed
-
-        {{ words_statistics.all }} / {{ words_statistics.learned_words }} / {{ words_statistics.words_with_good_rating }}
-
-
-    </div>
-
-    <hr>
-
-    <div class="test_block">
-        <div class="test_word">
-            <h2 class="test_h2">{{ word_to_test }}</h2>
-            <p class="test_p">(rating: {{ leaning_rating }})</p>
+            </form>
         </div>
-    </div>
-
-    <hr>
 
 
-    <div>
-        <form class="button_choose_answer_form" method="post">
-            {% csrf_token %}
-            <ul class="ul_test">
-                {% for w in answers_to_choose%}
-                <li class="li_test">
-                    <button class="test_answer_button" type="submit" name="chosen_answer" value="{{ w }}">
-                        {{ w }}
-                    </button>
-                </li>
-                {% endfor %}
-            </ul>
-        </form>
-        {{answers_to_choose_rating}}
+
+
+
+
+        <div class="test_block">
+
+            All / learned / test passed
+
+            {{ statistics.0 }} / {{ statistics.1 }} / {{ statistics.2 }}
+
+
+        </div>
+
         <hr>
-    </div>
 
-<!--    <div>-->
-<!--        {% if incorrect_answer_response_tip %}-->
-<!--            {{incorrect_answer_response_tip}}-->
-<!--        {% endif %}-->
-<!--    </div>-->
+        <div class="test_block">
+            <div class="test_word">
+                {% if lang == 'EN' %}
+                    <h2 class="test_h2">{{ word_to_test.0 }}</h2>
+                {% else %}
+                    <h2 class="test_h2">{{ word_to_test.1 }}</h2>
+                {% endif %}
+                <p class="test_p">(rating: {{ tested_word_rating }})</p>
+            </div>
+        </div>
 
-<!--    <div>-->
-<!--        {{answers_counter.correct_answers}} / {{answers_counter.questions}}-->
-<!--    </div>-->
-
-    <div class="test_block">
-        <form class="button_renew_answers_counter" method="post">
-            {% csrf_token %}
-            <button class="" type="submit" name="renew" value=True>
-                {{answers_counter.correct_answers}} / {{answers_counter.questions}} refresh
-            </button>
-        </form>
-    </div>
+        <hr>
 
 
+        <div>
+            <form class="button_choose_answer_form" method="post">
+                {% csrf_token %}
+                <ul class="ul_test">
+                    {% for w in answers_to_choose%}
+                    <li class="li_test">
+                        {% if lang == 'EN' %}
+                            <button class="test_answer_button" type="submit" name="chosen_answer" value="{{ w.0 }}">
+                                {{ w.2 }}
+                            </button>
+                        {% else %}
+                            <button class="test_answer_button" type="submit" name="chosen_answer" value="{{ w.0 }}">
+                                {{ w.1 }}
+                            </button>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+            {{answers_to_choose_rating}}
+            <hr>
+        </div>
+
+    <!--    <div>-->
+    <!--        {% if incorrect_answer_response_tip %}-->
+    <!--            {{incorrect_answer_response_tip}}-->
+    <!--        {% endif %}-->
+    <!--    </div>-->
+
+    <!--    <div>-->
+    <!--        {{answers_counter.correct_answers}} / {{answers_counter.questions}}-->
+    <!--    </div>-->
+
+        <div class="test_block">
+            <form class="button_renew_answers_counter" method="post">
+                {% csrf_token %}
+                <button class="" type="submit" name="renew" value=True>
+                    {{current_test_stats.0}} / {{current_test_stats.1}} refresh
+                </button>
+            </form>
+        </div>
 
 
-<!--    <div class="">-->
-<!--        <form class="" action="{% url 'test' %}" method="post">-->
-<!--            {% csrf_token %}-->
-<!--            {{ button_start_test_form }}-->
-<!--            <button class="" type="submit">-->
-<!--                Start test-->
-<!--            </button>-->
-<!--        </form>-->
-<!--    </div>-->
+
+
+    <!--    <div class="">-->
+    <!--        <form class="" action="{% url 'test' %}" method="post">-->
+    <!--            {% csrf_token %}-->
+    <!--            {{ button_start_test_form }}-->
+    <!--            <button class="" type="submit">-->
+    <!--                Start test-->
+    <!--            </button>-->
+    <!--        </form>-->
+    <!--    </div>-->
 
 
 
 
-    </div>
-
+        </div>
+    {% endif %}
 </main>
 {% endblock content %}

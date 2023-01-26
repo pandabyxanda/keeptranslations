@@ -40,6 +40,28 @@ class User_And_Session(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True, default=None)
     session = models.ForeignKey(Session, null=True, on_delete=models.SET_NULL, blank=True, default=None)
 
+
+class Words_Base(models.Model):
+    word = models.CharField(unique=True, max_length=255)
+    translation = models.CharField(max_length=255)
+    tag = models.CharField(max_length=255, blank=True, null=True, default=None)
+
+    def __str__(self):
+        return self.word
+
+class Collection(models.Model):
+    name = models.CharField(max_length=255)
+    time_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+class Words_Base_Collection(models.Model):
+    words_base = models.ForeignKey(Words_Base, null=True, on_delete=models.SET_NULL, blank=True, default=None)
+    collection = models.ForeignKey(Collection, on_delete=models.SET_DEFAULT, blank=True, default=1)
+
+
+
 # class Category(models.Model):
 #     name = models.CharField(max_length=100, db_index=True, verbose_name='Категория')
 #     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')

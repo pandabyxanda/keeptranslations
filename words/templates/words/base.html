@@ -34,13 +34,17 @@
 
                 {% endfor %}
                 {% if request.user.is_authenticated %}
-                    <li class="last">{{ user.username }}   <a href="{% url 'logout' %}"> Logout</a></li>
+                    <li class="last">{{ user.username }}   <a href="{% url 'logout' %}">&nbsp&nbsp&nbspLog out</a></li>
                 {% else %}
-                    <li class="last"><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a></li>
+                    <li class="last"><a href="{% url 'register' %}">Sign up</a> &nbsp&nbsp&nbsp <a href="{% url 'login' %}">Log in</a></li>
                 {%endif %}
 
 
             </ul>
+        </div>
+
+        <div class="header_addition">
+
         </div>
     </header>
 <!--</section>-->

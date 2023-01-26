@@ -19,7 +19,7 @@
             </ul>
         </form>
     </div>
-    <div></div>
+
 
 <!--    <div>-->
 <!--        <ul>-->
@@ -35,36 +35,38 @@
 
 <!--Pagination-->
     <p></p>
-    <div class="center">
-        <div class="pagination">
-            <ul class="pag1">
-                {% if page_obj.has_previous %}
-                <li>
-                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
-                </li>
-                {% endif %}
-
-                {% for p in page_obj.paginator.page_range %}
-                    {% if page_obj.number == p %}
-                        <li>
-                            <a href="?page={{ p }}">{{ p }}</a>
-                        </li>
-                    {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 or forloop.first or forloop.last %}
-                        <li>
-                            <a href="?page={{ p }}">{{ p }}</a>
-                        </li>
+    {% if page_obj.has_other_pages %}
+        <div class="center">
+            <div class="pagination">
+                <ul class="pag1">
+                    {% if page_obj.has_previous %}
+                    <li>
+                        <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                    </li>
                     {% endif %}
-                {% endfor %}
 
-                {% if page_obj.has_next %}
-                <li>
-                    <a href="?page={{ page_obj.next_page_number }}">></a>
-                </li>
-                {% endif %}
-            </ul>
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li>
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 or forloop.first or forloop.last %}
+                            <li>
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
 
+                    {% if page_obj.has_next %}
+                    <li>
+                        <a href="?page={{ page_obj.next_page_number }}">></a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+            </div>
         </div>
-    </div>
+    {% endif %}
 
 <!--<ul>-->
 <!--		{% if page_obj.has_previous %}-->
