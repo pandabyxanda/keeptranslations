@@ -19,13 +19,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('secret_key') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = str(os.environ["SECRET_KEY"])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS",
+    default='localhost 127.0.0.1 [::1]'
+).split(" ")
 
 # Application definition
 
@@ -74,29 +76,33 @@ WSGI_APPLICATION = 'Keeptranslations.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": str(os.environ["DBNAME"]),
+        "USER": str(os.environ["DBUSER"]),
+        "PASSWORD": str(os.environ["DBPASS"]),
+        "HOST": str(os.environ.get("DBHOST", "localhost")),
+        "PORT": str(os.environ.get("DBPORT", "5432")),
     }
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
 AUTH_PASSWORD_VALIDATORS = []  # for easy testing
 
 # Internationalization
@@ -114,7 +120,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = str(os.environ["WWW_DIR"]) + '/static'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = str(os.environ["WWW_DIR"]) + '/media'
+
+
 STATICFILES_DIR = []
 
 # Default primary key field type
@@ -122,8 +133,7 @@ STATICFILES_DIR = []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+
 
 CAPTCHA_LENGTH = 4
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
