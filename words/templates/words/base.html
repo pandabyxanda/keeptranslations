@@ -5,71 +5,46 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <!--    title of page, name of the tab-->
     <title>KeepTranslations {{ title }}</title>
-    <link type="text/css" href="{% static 'words/css/styles.css' %}" rel="stylesheet" />
-    <link rel="icon" href="{% static 'words/images/favicon.ico' %}" type="image/x-icon" />
-<!--    <link rel="shortcut icon" href="{% static 'words/images/logo.png' %}" type="image/x-icon"/>-->
+    <link type="text/css" href="{% static 'words/css/styles.css' %}" rel="stylesheet"/>
+    <link rel="icon" href="{% static 'words/images/favicon.ico' %}" type="image/x-icon"/>
 </head>
 
 <body>
-<!--<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>-->
 {% block mainmenu %}
-<!--<section class="section_head">-->
-    <header>
-        <div class="inner_header">
-            <ul id="mainmenu" class="mainmenu">
-                {% for m in menu %}
-<!--                    {% if not forloop.last %}-->
-                        {% if m.title == title %}
-                            <li class="selected">{{ m.title }}</li>
-                        {% else %}
-                            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
-                        {%endif %}
-
-<!--                    {% else %}-->
-<!--                        <li class="last"><a href="{% url m.url_name %}">{{ m.title }}</a></li>-->
-<!--                    {%endif %}-->
-
-                {% endfor %}
-                {% if request.user.is_authenticated %}
-                    <li class="last">{{ user.username }}   <a href="{% url 'logout' %}">&nbsp&nbsp&nbspLog out</a></li>
+<header>
+    <div class="inner_header">
+        <ul id="mainmenu" class="mainmenu">
+            {% for m in menu %}
+                {% if m.title == title %}
+                    <li class="selected">{{ m.title }}</li>
                 {% else %}
-                    <li class="last"><a href="{% url 'register' %}">Sign up</a> &nbsp&nbsp&nbsp <a href="{% url 'login' %}">Log in</a></li>
+                    <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
                 {%endif %}
+            {% endfor %}
 
+            {% if request.user.is_authenticated %}
+                <li class="last">
+                    {{ user.username }} <a href="{% url 'logout' %}">&nbsp&nbsp&nbspLog out</a>
+                </li>
+            {% else %}
+                <li class="last">
+                    <a href="{% url 'register' %}">Sign up</a> &nbsp&nbsp&nbsp <a href="{% url 'login' %}">Log in</a>
+                </li>
+            {%endif %}
+        </ul>
+    </div>
 
-            </ul>
-        </div>
+    <div class="header_addition">
+    </div>
 
-        <div class="header_addition">
-
-        </div>
-    </header>
-<!--</section>-->
+</header>
 {% endblock mainmenu %}
 
 
 {% block content %}
 {% endblock content %}
 
-<!--<div>-->
-<!--    <div class="card" data-tilt>-->
-<!--        <img src="{% static '/words/images/main-bg.jpg' %}">-->
-
-<!--    </div>-->
-
-<!--</div>-->
-
-<!--        <div data-tilt>-->
-<!--            123-->
-<!--        </div>-->
-
-        <script src="{% static 'words/js/vanilla-tilt.js' %}"></script>
-<!--<script src="words/js/vanilla-tilt.js"></script>-->
-        <script src="{% static 'words/js/script.js' %}"></script>
 </body>
-
 </html>
 

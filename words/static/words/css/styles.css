@@ -8,23 +8,12 @@ body {
     margin: 0px;
     padding: 0px;
     border: 0px;
-  font-size: 1.4rem;
-  font-family: "Open Sans", sans-serif;
-  color: #0a263d;
-  text-color: #0a263d;
-  /*
-
-  background: linear-gradient(0deg, #c0e2f9, #b2bfc8);
-
-  background: #b2bfc8;
-*/
-
-
+    font-size: 1.4rem;
+    font-family: "Open Sans", sans-serif;
+    color: #0a263d;
+    text-color: #0a263d;
     background-repeat: no-repeat;
 }
-
-
-
 body:before{
 	content:'';
 	position: fixed;
@@ -40,69 +29,38 @@ button{
     font-size: 1.4rem;
     background-color: inherit;
     cursor: pointer;
-
 }
 
 p {
   color: #134c7b;
 }
 
-/*
-section_head {
-    left: 0px;
-    background: #d611d1;
-
-}
-*/
-
-
 header {
     top: 0;
     left: 0;
-
     margin: 0px;
     padding: 0px;
     border: 0px;
     position: fixed;
     width: 100%;
-
     text-align: left;
-
-
-
-
-
-
     display: flex;
     flex-direction: column;
     left: 0px;
     right: 0px;
-    /*
-    align-items: center;
-    /* */
     z-index: 1;
 }
 
 .inner_header:hover{
-    /*
-    background: rgba(0,0,0,0.15);
-    */
+    /*background: rgba(0,0,0,0.15);*/
     backdrop-filter: blur(3px);
 }
 
 .inner_header{
     margin: auto, 20%;
-    */
-
     transition: background 400ms ease 0s;
-
     background: rgba(0,0,0,0.1);
-    /* opacity: 0.5;
-    background: red;
-    background: linear-gradient(0, rgba(178, 191, 200, 0), rgba(178, 191, 200, 1)); /* Стандартный синтаксис (должен быть последним) */
-
     backdrop-filter: blur(2px);
-
 }
 
 .header_addition{
@@ -110,10 +68,7 @@ header {
     background: linear-gradient(0deg, rgba(178, 191, 200, 0), rgba(178, 191, 200, 1));
 }
 
-
-
 main{
-
 	margin-top: 70px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -123,40 +78,31 @@ main{
 }
 
 .main_all{
-
-
     align-items: left;
     justify-content: center;
     width: 60%;
     min-width: 200px;
     font-size: 16px;
     margin: auto;
-
-
 }
 
 
 .main_form_block{
     width: 100%;
-    // height: 15%;
-
     display: flex;
     justify-content: center;
-
 }
 
 .main_form{
     margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
     float: center;
     width: 100%;
     position: relative;
     align-items: left;
-
-  display: flex;
-
+    display: flex;
 }
 
 /*
@@ -166,20 +112,18 @@ main{
 */
 
 
-
 a:link {
-
-  margin: 0px 0px 0px 0px;
-  text-decoration: none;
-  display: block;
-  vertical-align: middle;
+    margin: 0px 0px 0px 0px;
+    text-decoration: none;
+    display: block;
+    vertical-align: middle;
 }
 
 ul.mainmenu li.selected{
-  text-decoration: none;
-  display: inline-block;
-  vertical-align: middle;
-  text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+    text-align:center;
 }
 
 
@@ -215,23 +159,21 @@ ul.mainmenu li {
 
 
 ul.mainmenu li:hover {
-
     text-shadow: #202429 0px 0px 10px, #f7f8f9 0px 0px 5px;
     text-decoration: none;
 }
 
-ul.mainmenu li.logo {margin: 0;}
+ul.mainmenu li.logo {
+    margin: 0;
+}
 ul.mainmenu li.last {
-float: right;
-display: flex;
-
-
+    float: right;
+    display: flex;
 }
 
 
 ul.pag1 {
 	list-style: none;
-
 	margin: 0px 0px 0px 0px;
 	padding: 0;
 	text-align: center;
@@ -245,29 +187,8 @@ ul.pag1 {
 ul.pag1 li {
 	float: left;
 	text-align: center;
-
 	margin: 0px 0px 0px 0px;
-
 }
-
-
-
-/*
-p:hover {
-  background-color: #f67deb;
-}
-*/
-/*
-p {
-  color: #134c7b;
-}
-*/
-
-/*
-hr {
-  color: #fefbfe;
-}
-*/
 
 .logo {
 	background: url('../images/logo.png') no-repeat 10px 5px;
@@ -275,30 +196,6 @@ hr {
 	height: 60px;
 }
 
-
-.card {
-    reverse:                false, /* reverse the tilt direction */
-    max:                    1,     /* max tilt rotation (degrees) */
-    startX:                 0,      /* the starting tilt on the X axis, in degrees. */
-    startY:                 0,      /* the starting tilt on the Y axis, in degrees. */
-    perspective:            1000,   /* Transform perspective, the lower the more extreme the tilt gets. */
-    scale:                  2,      /*2 = 200%, 1.5 = 150%, etc.. */
-    speed:                  300,    // Speed of the enter/exit transition
-    transition:             true,   // Set a transition on enter/exit.
-    axis:                   null,   // What axis should be enabled. Can be "x" or "y"
-    reset:                  true,   // If the tilt effect has to be reset on exit.
-    easing:                 "cubic-bezier(.03,.98,.52,.99)",    // Easing on enter/exit.
-    glare:                  false,  // if it should have a "glare" effect
-    "max-glare":            1,      // the maximum "glare" opacity (1 = 100%, 0.5 = 50%)
-    "glare-prerender":      false,  // false = VanillaTilt creates the glare elements for you, otherwise
-                                    // you need to add .js-tilt-glare>.js-tilt-glare-inner by yourself
-    "mouse-event-element":  null,   // css-selector or link to HTML-element what will be listen mouse events
-    gyroscope:              true,   // Boolean to enable/disable device orientation detection,
-    gyroscopeMinAngleX:     -45,    // This is the bottom limit of the device angle on X axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the left border of the element;
-    gyroscopeMaxAngleX:     45,     // This is the top limit of the device angle on X axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the right border of the element;
-    gyroscopeMinAngleY:     -45,    // This is the bottom limit of the device angle on Y axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the top border of the element;
-    gyroscopeMaxAngleY:     45,     // This is the top limit of the device angle on Y axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the bottom border of the element;
-}
 
 .form-input {
     width: 300px;
@@ -318,108 +215,55 @@ hr {
 }
 
 .form-button {
-  display: flex;
-  align-items: left;
-  justify-content: center;
+    display: flex;
+    align-items: left;
+    justify-content: center;
     min-width: 200px;
     font-size: 16px;
     margin: auto;
 }
-/*
-
-.card {
-position: relative;
-width: 300px;
-height: 100px;
-color: white;
-}
-.card__front{
-z-index: 1;
-position: relative;
-background-color: cyan;
-height: 100%;
-text-align: center;
-backface-visibility: hidden;
-transition: transform .3s cubic-bezier(.2,.85,.4,1.275);
-}
-.card__back{
-z-index: 0;
-position: absolute;
-top: 0;
-width: 100%;
-height: 100%;
-text-align: center;
-backface-visibility: hidden;
-background-color: orange;
-transform: rotateY(-180deg);
-transition: transform .3s cubic-bezier(.2,.85,.4,1.275);
-}
-.card:hover .card__back {
-transform: rotateY(0deg);
-z-index: 2;
-}
-.card:hover .card__front {
-transform: rotateY(180deg);
-z-index: -1;
-}
-*/
 
 .button1 {
-  height: 100%;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.2s;
-  /*
-  background-color: transparent;
-  */
-  background: rgba(0,0,0,0.0);
-
-    /* opacity: 0.5; */
-/*
-  backdrop-filter: blur(2px);
-  */
+    height: 100%;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.2s;
+    background: rgba(0,0,0,0.0);
 }
 
 .button1:hover {
-
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-
-
 .center {
-  text-align: center;
+    text-align: center;
 }
 
 .pagination {
-  display: inline-block;
+    display: inline-block;
 }
 
 .pagination a {
-  color: black;
-  width: 40px;
-
-  margin: 0px 0px 0px 0px;
-
-  height: 40px;
-  float: left;
-
-  text-decoration: none;
-
-  text-align: center;
-  transition: background-color .3s;
-  border: 1px solid #ddd; /* Gray */
-  display: inline-block;
+    color: black;
+    width: 40px;
+    margin: 0px 0px 0px 0px;
+    height: 40px;
+    float: left;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    display: inline-block;
 }
 
 .pagination a.active {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #4CAF50;
+    color: white;
 }
 
 .pagination a:hover:not(.active) {
@@ -427,30 +271,22 @@ z-index: -1;
 }
 
 
-
-
-
 .saved{
     width: 100%;
-    // height: 15%;
-
     display: flex;
     justify-content: center;
-
 }
 
 .form_class_saved{
     margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
     float: center;
     width: 50%;
     position: relative;
     align-items: left;
-
-  display: flex;
-
+    display: flex;
 }
 
 
@@ -469,17 +305,14 @@ z-index: -1;
 }
 
 #id_word:focus{
-
     background: linear-gradient(90deg, #e4f3fd, #e4f3fd, #e4f3fd, #e4f3fd, #f4fafe);
 }
 #id_translation:focus{
-
     background: linear-gradient(-90deg, #e4f3fd, #e4f3fd, #e4f3fd, #e4f3fd, #f4fafe);
 }
 
 
 .button_translate{
-
     align-items: center;
     font-size: 16px;
     margin: 0px;
@@ -488,9 +321,6 @@ z-index: -1;
     width: 100px;
     display: flex;
     border: none;
-    /*
-    background-color: #eef1f3;
-    */
     background: linear-gradient(90deg, #f4fafe, #e4f3fd, #f4fafe);
 }
 .button_translate:hover{
@@ -501,29 +331,22 @@ z-index: -1;
 
 
 .button_save{
-    background-image: url("../images/star (3).png"); /* Путь к фоновому рисунку */
-
+    background-image: url("../images/star (3).png");
     background-repeat: no-repeat;
     padding: 10px;
     position: absolute;
     align: right;
     align-items: up;
-
     height: 40px;
     right: 0;
     width: 40px;
     text-align: center;
     border: 0;
-
     background-color: inherit;
     cursor: pointer;
     display: inline-block;
-    /*
-    border-radius: 100%;qd
-    */
 }
 .button_save:hover{
-
     background-image: url("../images/star (4).png");
     opacity: 0.8;
 }
@@ -533,11 +356,9 @@ z-index: -1;
 }
 
 .button_unsave{
-    background-image: url("../images/star (4).png"); /* Путь к фоновому рисунку */
-    background-position: center;  /* Положение фона */
+    background-image: url("../images/star (4).png");
+    background-position: center;
     background-repeat: no-repeat;
-
-
     margin-top: 0px;
     height: 50px;
     align-items: center;
@@ -545,7 +366,6 @@ z-index: -1;
     text-align: center;
     border: none;
     align: center;
-
     background-color: inherit;
     cursor: pointer;
     display: inline-block;
@@ -556,42 +376,16 @@ z-index: -1;
     */
 }
 .button_unsave:hover{
-
     background-image: url("../images/star (3).png");
     opacity: 0.8;
-
 }
 .button_unsave:active {
-  background-image: url("../images/star (3).png");
-  transform: rotate(-10deg)
+    background-image: url("../images/star (3).png");
+    transform: rotate(-10deg)
 }
-
-/*
-.button_unsave:hover::after {
-    content: "Delete";
-    width: 100px;
-    float: right;
-    font-size: 1.0rem;
-
-    background: transparent;
-    color: #fff;
-
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-
-    pointer-events: none;
-    transition: 1s;
-
-
-}
-*/
-
-
-
-
 
 
 .main_history{
-
     height: 100%;
     display: flex;
 }
@@ -609,7 +403,6 @@ z-index: -1;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column
-
 }
 
 .form_class_save_main{
@@ -623,31 +416,17 @@ z-index: -1;
 	margin: 0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
-
 	width: 100%;
     align-items: left;
     align-text: left;
-
-  //  align: up;
-  //  align-items: up;
-
-
-
-  //  width: 70%;
     text-align: left;
     border: 0;
-
     background-color: inherit;
   //  cursor: pointer;
     display: inline-block;
 }
 
-/*
-.main_history_word_button: hover{
-    height: 300px;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-*/
+
 .main_history_word_h5{
     margin: 0px;
     margin-top: 15px;
@@ -657,50 +436,35 @@ z-index: -1;
     font-size: 1.4rem;
 }
 
-/*
-.main_history_word_h5:hover{
-
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    background-color: red;
-    opacity: 0.8;
-
-}
-*/
 
 .main_history_word_button:hover{
     text-shadow: #202429 0px 0px 10px, #f7f8f9 0px 0px 5px;
-
 }
 
 .li_main_history{
-      flex: 0 0 auto;
-      width: 100%;
+    flex: 0 0 auto;
+    width: 100%;
     align-items: center;
     display: flex;
-	float: left;
+    float: left;
 
-	overflow: hidden;
-	word-wrap: break-word;
-	overflow-wrap: break-word
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word
 }
 
 .li_main_history:hover{
-
 }
 
 
 .learn_all, .test_all{
-
-
     align-items: left;
     justify-content: center;
     width: 40%;
     min-width: 200px;
     font-size: 16px;
     margin: auto;
-
     //border: 1px solid;
-
 }
 
 .ul_learn {
@@ -718,30 +482,26 @@ z-index: -1;
 }
 
 .li_learn{
-      flex: 0 0 auto;
-      width: 100%;
+    flex: 0 0 auto;
+    width: 100%;
     align-items: center;
     align-text: center;
-
     display: block;
     display: flex;
     flex-direction: column;
-	float: left;
-
-	overflow: hidden;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	font-size: 1.4rem;
+    float: left;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 1.4rem;
 }
 .li_learn:hover{
-
 }
 
 .form_learn_generate{
     display: flex;
     flex-direction: row;
     justify-content: center;
-
     background-color: inherit;
 }
 .form_learn_start_test{
@@ -749,16 +509,11 @@ z-index: -1;
     display: flex;
     flex-direction: row;
     justify-content: center;
-
-
-
 }
 .learn_button{
-
     background-color: inherit;
     cursor: pointer;
 }
-
 
 
 
@@ -774,7 +529,6 @@ z-index: -1;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-
 }
 
 .li_test{
@@ -782,49 +536,39 @@ z-index: -1;
       width: 50%;
     align-items: center;
     display: flex;
-	float: left;
+    float: left;
 
-	overflow: hidden;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	justify-content: center;
-	align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    justify-content: center;
+    align-items: center;
 
-	flex: 0 0 auto;
-	width: 100%;
-	align-items: center;
-	align-text: center;
-	display: block;
-	display: flex;
-	flex-direction: column;
-	float: left;
-	overflow: hidden;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	font-size: 1.4rem;
+    flex: 0 0 auto;
+    width: 100%;
+    align-items: center;
+    align-text: center;
+    display: block;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 1.4rem;
 }
 .li_test:hover{
-
 }
 
 .test_answer_button{
 	margin: 0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
-
 	width: 100%;
 	height: 50px;
     align-items: left;
     align-text: center;
-
-  //  align: up;
-  //  align-items: up;
-
-
-
-  //  width: 70%;
     border: 0;
-
     background-color: inherit;
     cursor: pointer;
     display: inline-block;
@@ -851,19 +595,17 @@ z-index: -1;
 
 
 .li_saved{
-      flex: 0 0 auto;
-      width: 50%;
+    flex: 0 0 auto;
+    width: 50%;
     align-items: center;
     display: flex;
-	float: left;
-
-	overflow: hidden;
-	word-wrap: break-word;
-	overflow-wrap: break-word
+    float: left;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word
 }
 
 .li_main_history:hover{
-
 }
 
 
@@ -884,25 +626,19 @@ z-index: -1;
     width: 100%;
     margin: 2px;
     font-size: 2rem;
-
-
 }
+
 .test_p{
     width: 100%;
     margin: auto;
-
 }
 
 .about_block{
-
-
     align-items: left;
     justify-content: center;
     width: 40%;
     min-width: 200px;
     margin: auto;
-
-    //border: 1px solid;
 }
 
 
@@ -929,6 +665,5 @@ z-index: -1;
 
 .login_button, .signin_button{
     width: 30%;
-
     min-width: 200px;
 }

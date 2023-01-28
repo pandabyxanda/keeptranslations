@@ -2,7 +2,6 @@
 
 {% block content %}
 <main>
-<!--    <h1>{{ title }}</h1>-->
     {% if words_records %}
         <div class="learn_all">
             <div class="">
@@ -15,33 +14,24 @@
                 </form>
             </div>
 
+            <ul class="ul_learn">
+                {% for w in words_records %}
+                <li class="li_learn">
+                    <h5 class="main_history_word_h5">{{ w.word }}</h5>
+                    {{ w.translation }}
+                </li>
+                {% endfor %}
+            </ul>
 
-                <ul class="ul_learn">
-                    {% for w in words_records %}
-                    <li class="li_learn">
-                        <h5 class="main_history_word_h5">{{ w.word }}</h5>
-                        {{ w.translation }}
-        <!--                <hr>-->
-                    </li>
-                    {% endfor %}
-                </ul>
-
-
-
-                <form class="form_learn_start_test" action="{% url 'test' %}" method="post">
-                    {% csrf_token %}
-                    {{ button_start_test_form }}
-                    <button class="learn_button" type="submit" name="add_words_to_test" value=True>
-                        Start test
-                    </button>
-                </form>
-
+            <form class="form_learn_start_test" action="{% url 'test' %}" method="post">
+                {% csrf_token %}
+<!--                {{ button_start_test_form }}-->
+                <button class="learn_button" type="submit" name="add_words_to_test" value=True>
+                    Start test
+                </button>
+            </form>
         </div>
     {% endif %}
-
-
-
-
 
 </main>
 {% endblock content %}

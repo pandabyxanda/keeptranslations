@@ -3,11 +3,10 @@
 {% block content %}
 <main>
     <div class="collections_all">
-
         <form method="post" action="{% url 'collections' %}">
             {% csrf_token %}
             <select name='Choose_collection' onchange="form.submit()">
-                    <option value={{Null}}>Choose collection</option>
+                <option value={{Null}}>Choose collection</option>
                 {% for ch in choose_collection %}
                     {% if ch.name == collection_name %}
                         <option value={{ch}} selected>{{ch}}</option>
@@ -25,7 +24,9 @@
     {% if words_records %}
         <form method="post" action="{% url 'collections' %}">
             {% csrf_token %}
-            <button class="" type="submit" name=collection_name_to_save value={{collection_name}} >Save this collection</button>
+            <button class="" type="submit" name=collection_name_to_save value={{collection_name}} >
+                Save this collection
+            </button>
         </form>
     {% endif %}
 

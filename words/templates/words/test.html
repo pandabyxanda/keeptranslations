@@ -2,13 +2,9 @@
 
 {% block content %}
 <main>
-<!--    <h1>{{ title }}</h1>-->
-    {% if word_to_test %}
-        <div class="test_all">
-    <!--        <label class="switch">-->
-    <!--        <input type="checkbox">-->
-    <!--        <span class="slider"></span>-->
-    <!--        </label>-->
+{% if word_to_test %}
+    <div class="test_all">
+
         <div class="test_block">
             <form method="post">
                 {% csrf_token %}
@@ -19,18 +15,9 @@
             </form>
         </div>
 
-
-
-
-
-
         <div class="test_block">
-
             All / learned / test passed
-
             {{ statistics.0 }} / {{ statistics.1 }} / {{ statistics.2 }}
-
-
         </div>
 
         <hr>
@@ -47,7 +34,6 @@
         </div>
 
         <hr>
-
 
         <div>
             <form class="button_choose_answer_form" method="post">
@@ -72,16 +58,6 @@
             <hr>
         </div>
 
-    <!--    <div>-->
-    <!--        {% if incorrect_answer_response_tip %}-->
-    <!--            {{incorrect_answer_response_tip}}-->
-    <!--        {% endif %}-->
-    <!--    </div>-->
-
-    <!--    <div>-->
-    <!--        {{answers_counter.correct_answers}} / {{answers_counter.questions}}-->
-    <!--    </div>-->
-
         <div class="test_block">
             <form class="button_renew_answers_counter" method="post">
                 {% csrf_token %}
@@ -91,23 +67,8 @@
             </form>
         </div>
 
-
-
-
-    <!--    <div class="">-->
-    <!--        <form class="" action="{% url 'test' %}" method="post">-->
-    <!--            {% csrf_token %}-->
-    <!--            {{ button_start_test_form }}-->
-    <!--            <button class="" type="submit">-->
-    <!--                Start test-->
-    <!--            </button>-->
-    <!--        </form>-->
-    <!--    </div>-->
-
-
-
-
-        </div>
-    {% endif %}
+    </div>
+{% endif %}
 </main>
+
 {% endblock content %}

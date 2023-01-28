@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -23,13 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open('secret_key') as f:
     SECRET_KEY = f.read().strip()
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
 
 # Application definition
 
@@ -74,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Keeptranslations.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -84,7 +79,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -103,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_PASSWORD_VALIDATORS = []  # for easy testing
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -116,14 +110,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIR = []
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -141,8 +133,6 @@ CAPTCHA_LETTER_ROTATION = (-1, 1)
 CAPTCHA_FONT_SIZE = 30
 CAPTCHA_IMAGE_SIZE = (100, 50)
 
-
-
-SESSION_COOKIE_AGE = 3153600000  # 60sec*60min*24hours*365days*100years
+SESSION_COOKIE_AGE = 31536000  # 60sec*60min*24hours*365days*1year
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_SAVE_EVERY_REQUEST = True
