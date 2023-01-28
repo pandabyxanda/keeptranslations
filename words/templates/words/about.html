@@ -2,23 +2,25 @@
 
 
 {% block content %}
-    <main>
-        <div class="about_block">
-<!--        <h1>{{ title }}</h1>-->
-            Translator from English to Russian with history saving,
-            the ability to correct the translation, as well as mark the
-            words learned and test the learned words. Uses google translate api.
-            Register to use main features
+<main>
+    <div class="about_block">
+        <h3> 🔷 Features </h3>
 
-<!--        <ul>-->
-<!--            {% for w in words %}-->
-<!--            <li>-->
-<!--                <h3>{{ w.word }}</h3>-->
-<!--                <p>{{ w.translation }}</p>-->
-<!--                <hr>-->
-<!--            </li>-->
-<!--            {% endfor %}-->
-<!--        </ul>-->
-        </div>
-    </main>
+        <p>🔹 Translate words and phrases from English to Russian(using google translate api)
+        <p>🔹 Save translations
+        <p>🔹 Correct saved translations
+        <p>🔹 Add new words to saved from existing collections
+        <p>🔹 Mark new words as learned (make them available for testing)
+        <p>🔹 Test learned words
+        <p>🔹 Watch statistics
+        <p>🔹 Use all functions without registration. However registration allowes you to restore data using
+            different devices. That's why password validation during registration is disabled
+
+        <h3> 🔷 How to use </h3>
+        <p>1. Go to Collections, add some words from existing collections, or save your own words and
+            translations pressing the star on the Main page
+        <p>2. Go to Learn, make sure you remember the words and translation, start test
+
+    </div>
+</main>
 {% endblock content %}

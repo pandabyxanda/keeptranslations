@@ -2,99 +2,58 @@
 
 {% block content %}
 <main>
-<!--    <h1>{{ title }}</h1>-->
-    <div class="saved">
-        <form class="form_class_saved" action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-            <ul class="ul_saved">
-                {% for w in page_obj %}
-                <li class="li_saved">
-                    <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
-                    <button class="main_history_word_button" type="submit" name="change_word" value={{w.pk}} >
-                        <h5 class="main_history_word_h5">{{ w.word }}</h5>
-                        {{ w.translation }}
-                    </button>
-                </li>
-                {% endfor %}
-            </ul>
-        </form>
-    </div>
+<div class="saved">
+    <form class="form_class_saved" action="{% url 'saved' %}" method="post">
+        {% csrf_token %}
+        <ul class="ul_saved">
+            {% for w in page_obj %}
+            <li class="li_saved">
+                <button class="button_unsave" type="submit" name="delete_word" value={{w.pk}} ></button>
+                <button class="main_history_word_button" type="submit" name="change_word" value={{w.pk}} >
+                    <h5 class="main_history_word_h5">{{ w.word }}</h5>
+                    {{ w.translation }}
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+    </form>
+</div>
 
-
-<!--    <div>-->
-<!--        <ul>-->
-<!--            {% for w in page_obj %}-->
-<!--            <li>-->
-<!--                <h4>{{ w.pk }} {{ w.word }}</h4>-->
-<!--                {{ w.translation }}-->
-<!--                <hr>-->
-<!--            </li>-->
-<!--            {% endfor %}-->
-<!--        </ul>-->
-<!--    </div>-->
 
 <!--Pagination-->
-    <p></p>
-    {% if page_obj.has_other_pages %}
-        <div class="center">
-            <div class="pagination">
-                <ul class="pag1">
-                    {% if page_obj.has_previous %}
-                    <li>
-                        <a href="?page={{ page_obj.previous_page_number }}"><</a>
-                    </li>
+<p></p>
+{% if page_obj.has_other_pages %}
+    <div class="center">
+        <div class="pagination">
+            <ul class="pag1">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                </li>
+                {% endif %}
+
+                {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li>
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 or forloop.first or forloop.last %}
+                        <li>
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
                     {% endif %}
+                {% endfor %}
 
-                    {% for p in page_obj.paginator.page_range %}
-                        {% if page_obj.number == p %}
-                            <li>
-                                <a href="?page={{ p }}">{{ p }}</a>
-                            </li>
-                        {% elif p >= page_obj.number|add:-4 and p <= page_obj.number|add:4 or forloop.first or forloop.last %}
-                            <li>
-                                <a href="?page={{ p }}">{{ p }}</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                </li>
+                {% endif %}
+            </ul>
 
-                    {% if page_obj.has_next %}
-                    <li>
-                        <a href="?page={{ page_obj.next_page_number }}">></a>
-                    </li>
-                    {% endif %}
-                </ul>
-
-            </div>
         </div>
-    {% endif %}
-
-<!--<ul>-->
-<!--		{% if page_obj.has_previous %}-->
-<!--		<li class="page-num">-->
-<!--			<a href="?page={{ page_obj.previous_page_number }}">&lt;</a>-->
-<!--		</li>-->
-<!--		{% endif %}-->
-
-<!--		{% for p in paginator.page_range %}-->
-<!--		{% if page_obj.number == p %}-->
-<!--		<li class="page-num page-num-selected">{{ p }}</li>-->
-<!--		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}-->
-<!--		<li class="page-num">-->
-<!--			<a href="?page={{ p }}">{{ p }}</a>-->
-<!--		</li>-->
-<!--		{% endif %}-->
-<!--		{% endfor %}-->
-
-<!--		{% if page_obj.has_next %}-->
-<!--		<li class="page-num">-->
-<!--			<a href="?page={{ page_obj.next_page_number }}">&gt;</a>-->
-<!--		</li>-->
-<!--		{% endif %}-->
-
-
-<!--	</ul>-->
-
-
+    </div>
+{% endif %}
 
 </main>
 {% endblock content %}
