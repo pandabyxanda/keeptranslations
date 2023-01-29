@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'words.apps.WordsConfig',
-    'captcha',
+#     'captcha',
 ]
 
 MIDDLEWARE = [
@@ -135,13 +135,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-CAPTCHA_LENGTH = 4
+# CAPTCHA_LENGTH = 4
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
-CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
-CAPTCHA_LETTER_ROTATION = (-1, 1)
-CAPTCHA_FONT_SIZE = 30
-CAPTCHA_IMAGE_SIZE = (100, 50)
+# CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+# CAPTCHA_LETTER_ROTATION = (-1, 1)
+# CAPTCHA_FONT_SIZE = 30
+# CAPTCHA_IMAGE_SIZE = (100, 50)
 
 SESSION_COOKIE_AGE = 31536000  # 60sec*60min*24hours*365days*1year
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
