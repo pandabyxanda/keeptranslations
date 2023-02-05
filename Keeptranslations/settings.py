@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+from secret_key import SECRET_KEY
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,13 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('secret_key') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = str(os.environ.get("SECRET_KEY", default=SECRET_KEY))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS",
+    default='localhost 127.0.0.1'
+).split(" ")
 
 # Application definition
 
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'words.apps.WordsConfig',
     'captcha',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +78,28 @@ WSGI_APPLICATION = 'Keeptranslations.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if os.environ.get("DBNAME", default=None):
+
+    # db postgres for deploy
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": str(os.environ["DBNAME"]),
+            "USER": str(os.environ["DBUSER"]),
+            "PASSWORD": str(os.environ["DBPASS"]),
+            "HOST": str(os.environ.get("DBHOST", "localhost")),
+            "PORT": str(os.environ.get("DBPORT", "5432")),
+        }
     }
-}
+else:
+    # db for local
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -113,8 +134,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if os.environ.get("WWW_DIR", default=None):
+    STATIC_URL = '/static/'
+    STATIC_ROOT = str(os.environ["WWW_DIR"]) + '/static'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = str(os.environ["WWW_DIR"]) + '/media'
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 STATICFILES_DIR = []
 
 # Default primary key field type
@@ -122,17 +152,25 @@ STATICFILES_DIR = []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
 CAPTCHA_LENGTH = 4
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
-CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
-CAPTCHA_LETTER_ROTATION = (-1, 1)
-CAPTCHA_FONT_SIZE = 30
-CAPTCHA_IMAGE_SIZE = (100, 50)
+# CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+# CAPTCHA_LETTER_ROTATION = (-1, 1)
+# CAPTCHA_FONT_SIZE = 30
+# CAPTCHA_IMAGE_SIZE = (100, 50)
 
 SESSION_COOKIE_AGE = 31536000  # 60sec*60min*24hours*365days*1year
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_SAVE_EVERY_REQUEST = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+}

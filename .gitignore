@@ -1,12 +1,12 @@
 ### Django ###
 
-secret_key
+*secret_key*
 
 work_with_orm.py
 
 /words/Saved\ translations.xlsx
 excel.py
-
+*ENCRYPTION_KEY.py
 
 *.log
 *.pot

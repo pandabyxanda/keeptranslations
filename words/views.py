@@ -4,13 +4,21 @@ import numpy
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .forms import *
 from .models import *
+from .serializers import *
 from .translations import make_google_translation
+from .encryption import do_decrypt
 
 menu = [{'title': 'Main page', 'url_name': 'home'},
         {'title': 'Saved', 'url_name': 'saved'},
@@ -470,8 +478,8 @@ class RegisterUser(CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Sign in'
         context['menu'] = menu
-        print(f"1 {self.request = }")
-        print(f"1 {self.request.session.session_key = }")
+        # print(f"1 {self.request = }")
+        # print(f"1 {self.request.session.session_key = }")
         return context
 
     def form_valid(self, form):
@@ -497,8 +505,8 @@ class LoginUser(LoginView):
         return context
 
     def get_success_url(self):
-        print(f"5{self.request = }")
-        print(f"5{self.request.session.session_key = }")
+        # print(f"5{self.request = }")
+        # print(f"5{self.request.session.session_key = }")
         return reverse_lazy('home')
 
 
@@ -524,3 +532,52 @@ def logout_user(request):
 #         'title': menu[-1]['title'],
 #     }
 #     return render(request, 'words/login.html', context=context)
+
+
+
+# class WordsAPIView(generics.ListCreateAPIView):
+#     queryset = Words.objects.all()[:5]
+#     serializer_class = WordSerializer
+#     # permission_classes = (IsAuthenticated,)
+#
+# class WordsAPIUpdate(generics.UpdateAPIView):
+#     queryset = Words.objects.all()
+#     serializer_class = WordSerializer
+#
+# class WordsAPIDelete(generics.DestroyAPIView):
+#     queryset = Words.objects.all()
+#     serializer_class = WordSerializer
+
+class Translation(APIView):
+    def get(self, request):
+        # print()
+        # print(f"{request = }")
+        encrypted_data = request.GET.get('encrypted_data', None)
+        # print(f"{encrypted_data = }")
+        if encrypted_data:
+            data = do_decrypt(encrypted_data)
+            # print(f"{data = }")
+            word = data['word']
+            target_language = data['target_language']
+            source_language = data['source_language']
+
+            # print(f"{word = }")
+
+            if word and target_language and source_language:
+                # try to find translation in Words_Base
+                if Words_Base.objects.filter(word=word).exists():
+                    translation = Words_Base.objects.filter(word=word)[0].translation
+                    # print(f"translation from base")
+                else:
+                    translation = make_google_translation(word, target_language, source_language)['translatedText'].strip()
+                result = JsonResponse({'word': word, 'translation': translation})
+            else:
+                result = JsonResponse({'error': 'validation error'})
+        else:
+            result = JsonResponse({'error': 'token error'})
+
+        # print(f"{result = }")
+
+        return result
+
+    # permission_classes = (IsAuthenticated, )
