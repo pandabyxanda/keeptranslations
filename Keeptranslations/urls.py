@@ -19,12 +19,17 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Keeptranslations import settings
-from words.views import index, pageNotFound
+from words.views import pageNotFound, Translation
+# from words.views import WordsAPIView, WordsAPIUpdate, WordsAPIDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('words.urls')),
-    path('captcha/', include('captcha.urls')),
+    # path('captcha/', include('captcha.urls')),
+    # path('api/v1/list/', WordsAPIView.as_view()),
+    # path('api/v1/list/<int:pk>/',  WordsAPIUpdate.as_view()),
+    # path('api/v1/list_delete/<int:pk>/',  WordsAPIDelete.as_view()),
+    path('api/v1/translate/',  Translation.as_view()),
 ]
 
 handler404 = pageNotFound
